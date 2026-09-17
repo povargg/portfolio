@@ -17,7 +17,7 @@
 
 .header {
   width: 100%;
-  height: 120px;
+  height: 80px;
   border-radius: 2rem;
   box-shadow: 0px 0px 10px transparent;
   top: 0;
@@ -117,8 +117,8 @@ body {
   width: 220px;
   border: 2px transparent var(--suflower-yellow);
   border-radius: 0;
-  font-family: "Jacquard 12", system-ui;
-  font-size: 40px;
+  font-family: "Cherry Bomb One", system-ui;
+  font-size: 25px;
   color: var(--matcha-green);
   transition: 0.3s;
   border-radius: 0.5rem;
@@ -133,8 +133,8 @@ body {
   width: 260px;
   border: 2px transparent var(--suflower-yellow);
   border-radius: 0;
-  font-family: "Jacquard 12", system-ui;
-  font-size: 45px;
+  font-family: "Cherry Bomb One", system-ui;
+  font-size: 27.5px;
   color: transparent;
   transition: 0.3s;
   border-radius: 0.5rem;
@@ -143,8 +143,8 @@ body {
 
 
 h1 {
-  font-family: "Jacquard 12", system-ui;
-  font-size: 90px;
+  font-family: "Cherry Bomb One", system-ui;
+  font-size: 60px;
   font-weight: 200;
   color: var(--forest-green);
   transition: 0.3s;
@@ -155,8 +155,8 @@ h1:hover {
   background: linear-gradient(to right, var(--toxic-green), var(--forest-green));
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: "Jacquard 12", system-ui;
-  font-size: 95px;
+  font-family: "Cherry Bomb One", system-ui;
+  font-size: 60px;
   font-weight: 200;
   color: transparent;
   transition: 0.3s;
@@ -187,8 +187,8 @@ h1:hover {
 }
 
 p {
-  font-family: "Jacquard 12", system-ui;
-  font-size: 2rem;
+  font-family: "Prompt", sans-serif;
+  font-size: 1.4rem;
   color: var(--forest-green);
   margin-left: 0rem;
   background-color: transparent;
@@ -241,8 +241,8 @@ p {
 .short_skills {
   background-color: transparent;
   padding: 2rem;
-  font-size: 2.75rem;
-  font-family: "Jacquard 12", system-ui;
+  font-size: 2.2rem;
+  font-family: "Cherry Bomb One", system-ui;
   font-style: italic;
 }
 
@@ -265,8 +265,22 @@ p {
   background-color: var(--toxic-green);
   border: 0px;
   padding: 1rem;
-  font-size: 3rem;
-  font-family: "Jacquard 12", system-ui;
+  font-size: 2rem;
+  font-family: "Cherry Bomb One", system-ui;
+  font-style: normal;
+  border-radius: 20px;
+  color: var(--goldenrod);
+  transition: 0.2s;
+}
+
+
+.projects_button:hover {
+  background-color: var(--forest-green);
+  border: 4px solid var(--goldenrod);
+  padding: 1rem;
+  font-size: 2.2rem;
+  transition: 0.2s;
+  font-family: "Cherry Bomb One", system-ui;
   font-style: normal;
   border-radius: 20px;
   color: var(--goldenrod);
@@ -298,6 +312,15 @@ p {
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
+  transition: 0.2s;
+}
+
+.footer_icons_container:hover {
+  width: 115px;
+  height: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: 0.2s;
 }
 
 .footer_text_container {
@@ -313,13 +336,14 @@ p {
   height: 70px;
   transition: 0.3s;
   border-radius: 5px;
+  border: 0px solid white;
 }
 
 .invisible_button:hover {
-  background-color: var(--light-purple);
-  border: 0px;
-  width: 85px;
-  height: 75px;
+  background-color: black;
+  border: 4px solid white;
+  width: 115px;
+  height: 80px;
   border-radius: 5px;
   transition: 0.3s;
 }
