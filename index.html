@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Taras Shybaievs Portfolio für ein duales Studium in der IT. Mit Linux-Dotfiles, UltimateDesktopEffects und Einblicken in seine Webentwicklung.">
+  <meta name="theme-color" content="#b8bb26">
+  <title>Taras Shybaiev | Portfolio</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt</a>
+
+  <header class="site-header">
+    <nav class="header-inner" aria-label="Hauptnavigation">
+      <ul class="nav-list">
+        <li><a href="#ueber-mich">Über mich</a></li>
+        <li><a href="#erfahrung">Erfahrung</a></li>
+        <li><a href="#projekte">Projekte</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#bildung">Bildung</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="inhalt" class="wrap" tabindex="-1">
+    <section id="ueber-mich" class="hero" aria-labelledby="name">
+      <h1 id="name">Willkommen</h1>
+      <p class="hero-name">Taras Shybaiev</p>
+      <div class="about-row">
+        <details class="portrait-reveal">
+          <summary title="Foto anzeigen">
+            <img src="assets/taras-portrait.jpg" width="1086" height="1448" alt="">
+            <span class="portrait-label" aria-hidden="true">FOTO <span>→</span></span>
+            <span class="visually-hidden">Porträt von Taras Shybaiev anzeigen</span>
+          </summary>
+          <span class="visually-hidden">Porträt von Taras Shybaiev</span>
+        </details>
+        <div class="about-copy">
+          <p>Hallo, ich bin Taras und 19 Jahre alt. Ich bin ein enthusiastischer Programmierer und habe diese Webseite erstellt, um alles zu zeigen, was ich bisher in meinem Leben programmiert oder konfiguriert habe. Meine Erfahrung erstreckt sich auf unterschiedliche Bereiche, da ich alles Mögliche ausprobieren wollte. Jetzt bin ich mir absolut sicher, dass es die richtige Entscheidung war, mich mit Programmieren und PCs zu beschäftigen.</p>
+        </div>
+      </div>
+
+      <div class="skills-ribbon" aria-label="Schwerpunkte: Software, Hardware, Git, Webentwicklung und Linux">
+        <div class="ribbon-track">
+          <div class="ribbon-group" aria-hidden="true">
+            <span>Software</span><span>Hardware</span><span>Git</span><span>Webdev</span><span>Linux</span>
+          </div>
+          <div class="ribbon-group" aria-hidden="true">
+            <span>Software</span><span>Hardware</span><span>Git</span><span>Webdev</span><span>Linux</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-shortcuts" aria-label="Projektübersicht">
+        <a href="#ultimate-desktop-effects">Desktop Effects</a>
+        <a href="#linux-dotfiles">Dotfiles</a>
+        <a href="#portfolio-webseite">Webseiten</a>
+        <button type="button" disabled title="Details folgen">Ryoku Arch</button>
+      </div>
+    </section>
+
+    <section id="projekte" class="page-section" aria-labelledby="projekte-titel">
+      <div class="section-heading">
+        <h2 id="projekte-titel">Projekte</h2>
+        <a class="text-link" href="https://github.com/povargg?tab=repositories">
+          Alle Repositories <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="project-list">
+        <article id="ultimate-desktop-effects" class="feature feature--windows" aria-labelledby="windows-titel">
+          <div class="windows-copy">
+            <div class="project-meta">
+              <img class="app-icon" src="assets/ue-logo.png" width="256" height="256" alt="" loading="lazy">
+              <p class="eyebrow">Windows · C++17 · DirectX</p>
+            </div>
+            <h3 id="windows-titel">UltimateDesktop<wbr>Effects</h3>
+            <p>Schnee, Regen, fallende Blätter und Halloween für Windows 10 und 11. Schnee bleibt auf Fenstern liegen, Regen sammelt sich an der Taskleiste und im Halloween-Modus seilen sich Pixelspinnen ab. Jeder Effekt hat eigene Einstellungen und lässt sich über das Symbol im Infobereich auswählen.</p>
+            <p>Die Modi für Regen, Blätter und Halloween habe ich entwickelt und in einer App zusammengeführt. Die Grundlage für das Windows-Overlay und den Schnee war <a href="https://github.com/flipkips/desktop-snow-overlay">LayerSnow von flipkips</a>.</p>
+            <div class="action-row">
+              <a class="button button--dark" href="https://github.com/povargg/UltimateDesktopEffects/releases">
+                Windows-Download <span aria-hidden="true">↗</span>
+              </a>
+              <a class="button button--outline" href="https://github.com/povargg/UltimateDesktopEffects">
+                Quellcode <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+          <figure class="windows-art">
+            <a class="image-link" href="assets/ultimate-effects.png" target="_blank" rel="noopener" aria-label="Simulationsvorschau in voller Größe öffnen (neuer Tab)">
+              <img src="assets/ultimate-effects.png" width="1280" height="800" loading="lazy" decoding="async"
+                   alt="Vier Simulationsszenen mit Schnee, Regen, bunten Blättern und Halloween-Figuren auf Fenstern">
+            </a>
+            <figcaption>Vorschau aus der Simulation</figcaption>
+          </figure>
+        </article>
+
+        <article id="linux-dotfiles" class="feature feature--linux" aria-labelledby="linux-titel">
+          <div class="feature-head">
+            <div class="feature-copy">
+              <p class="eyebrow">Linux · Lua · RON</p>
+              <h3 id="linux-titel">Linux-Dotfiles</h3>
+              <p>Meine Konfigurationen für Neovim, den Musikplayer rmpc und das Terminal. Im Repository stehen auch die Einstellungen für Kitty, fish und Starship auf Basis der Dotfiles von end-4 sowie eigene Abschnitte für MPD und CAVA.</p>
+            </div>
+            <div class="action-row">
+              <a class="button button--dark" href="https://github.com/povargg/dotfiles">
+                Quellcode <span aria-hidden="true">↗</span>
+              </a>
+              <a class="button button--outline" href="https://github.com/povargg/dotfiles/blob/main/docs/README.de.md">
+                Anleitung <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="dotfiles-grid">
+            <section class="dotfile" aria-labelledby="povvim-titel">
+              <figure>
+                <a class="image-link" href="assets/povvim.webp" target="_blank" rel="noopener" aria-label="POVVIM-Screenshot in voller Größe öffnen (neuer Tab)">
+                  <img src="assets/povvim.webp" width="2048" height="856" loading="lazy" decoding="async"
+                       alt="Neovim mit POVVIM-Startbildschirm und dem Farbschema Aardvark Ink">
+                </a>
+              </figure>
+              <div class="dotfile-copy">
+                <h4 id="povvim-titel">POVVIM</h4>
+                <p>Mein Neovim-Setup auf Basis von LazyVim. Mit Neogit und CodeDiff kann ich Änderungen im Editor vergleichen und committen. Für HTML und Markdown nutze ich Live Preview. Build-Aufgaben starte ich direkt aus Neovim über Overseer.</p>
+              </div>
+            </section>
+            <section class="dotfile" aria-labelledby="rmpc-titel">
+              <figure>
+                <a class="image-link" href="assets/rmpc.webp" target="_blank" rel="noopener" aria-label="rmpc-Screenshot in voller Größe öffnen (neuer Tab)">
+                  <img src="assets/rmpc.webp" width="2048" height="856" loading="lazy" decoding="async"
+                       alt="rmpc mit Warteschlange, Albumcover und rosa Fortschrittsleiste">
+                </a>
+              </figure>
+              <div class="dotfile-copy">
+                <h4 id="rmpc-titel">rmpc</h4>
+                <p>Ein eigenes Layout für den MPD-Client. Neben der Warteschlange steht das Albumcover. Eigene Symbole zeigen Wiedergabestatus und Titelbewertungen. Gedämpfte Grün- und Goldtöne treffen auf eine rosa Fortschrittsleiste.</p>
+                <ul class="palette" aria-label="Farbpalette des rmpc-Themes">
+                  <li><span style="--swatch: #1d2021" aria-hidden="true"></span><code>#1D2021</code></li>
+                  <li><span style="--swatch: #665c54" aria-hidden="true"></span><code>#665C54</code></li>
+                  <li><span style="--swatch: #d5c4a1" aria-hidden="true"></span><code>#D5C4A1</code></li>
+                  <li><span style="--swatch: #dbbc7f" aria-hidden="true"></span><code>#DBBC7F</code></li>
+                  <li><span style="--swatch: #e69875" aria-hidden="true"></span><code>#E69875</code></li>
+                  <li><span style="--swatch: #a7c080" aria-hidden="true"></span><code>#A7C080</code></li>
+                  <li><span style="--swatch: #83c092" aria-hidden="true"></span><code>#83C092</code></li>
+                  <li><span style="--swatch: #7fbbb3" aria-hidden="true"></span><code>#7FBBB3</code></li>
+                  <li><span style="--swatch: #d699b6" aria-hidden="true"></span><code>#D699B6</code></li>
+                  <li><span style="--swatch: #e67e80" aria-hidden="true"></span><code>#E67E80</code></li>
+                </ul>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article class="feature web-project" id="portfolio-webseite" aria-labelledby="web-titel">
+          <div>
+            <p class="eyebrow">Web · HTML · CSS</p>
+            <h3 id="web-titel">Portfolio-Webseite</h3>
+            <p>Für meine Bewerbung habe ich diese Seite als eigenes Webprojekt aufgebaut. Den Quellcode findest du auf GitHub.</p>
+          </div>
+          <a class="button button--outline" href="https://github.com/povargg/portfolio">
+            Quellcode <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="page-section" aria-labelledby="skills-titel">
+      <div class="section-heading">
+        <h2 id="skills-titel">Skills</h2>
+      </div>
+      <dl class="skills-grid">
+        <div>
+          <dt>Softwareentwicklung</dt>
+          <dd>C++17, Win32 und DirectX am Beispiel von <a href="#ultimate-desktop-effects">UltimateDesktopEffects</a>.</dd>
+        </div>
+        <div>
+          <dt>Linux</dt>
+          <dd>Neovim, Shell und Desktop-Konfiguration. Beispiele stehen in den <a href="#linux-dotfiles">Linux-Dotfiles</a>.</dd>
+        </div>
+        <div>
+          <dt>Webentwicklung</dt>
+          <dd>HTML, CSS und responsive Layouts für dieses <a href="#portfolio-webseite">Portfolio</a>.</dd>
+        </div>
+        <div>
+          <dt>Versionsverwaltung</dt>
+          <dd>Versionsverwaltung mit Git und Projektdokumentation auf <a href="https://github.com/povargg">GitHub</a>.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <div class="background-grid">
+      <section id="erfahrung" class="background-panel" aria-labelledby="erfahrung-titel">
+        <h2 id="erfahrung-titel">Erfahrung</h2>
+        <h3>Webentwicklungspraktikum</h3>
+        <p>Im Praktikum habe ich erste Einblicke in die Webentwicklung bekommen. In eigenen Projekten vertiefe ich auch Themen rund um Linux, Windows und PC-Hardware.</p>
+      </section>
+      <section id="bildung" class="background-panel background-panel--education" aria-labelledby="bildung-titel">
+        <h2 id="bildung-titel">Bildung</h2>
+        <h3>Duales Studium in der IT</h3>
+        <p>Im dualen Studium möchte ich Softwareentwicklung vertiefen und das Gelernte direkt in Projekten im Betrieb anwenden.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer id="kontakt" class="site-footer">
+    <div class="footer-inner">
+      <p>© 2026 Taras Shybaiev</p>
+      <div class="social-links" aria-label="Social Media">
+        <button class="social-icon" type="button" disabled aria-label="E-Mail – Adresse folgt" title="Adresse folgt"><img src="assets/gmail.png" width="64" height="64" alt=""></button>
+        <button class="social-icon" type="button" disabled aria-label="WhatsApp – Link folgt" title="Link folgt"><img src="assets/whatsapp.png" width="64" height="64" alt=""></button>
+        <button class="social-icon" type="button" disabled aria-label="Discord – Link folgt" title="Link folgt"><img src="assets/discord.png" width="64" height="64" alt=""></button>
+        <button class="social-icon" type="button" disabled aria-label="Reddit – Link folgt" title="Link folgt"><img src="assets/reddit.png" width="64" height="64" alt=""></button>
+        <a class="social-icon" href="https://github.com/povargg" aria-label="GitHub-Profil"><img src="assets/github.png" width="64" height="64" alt=""></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
