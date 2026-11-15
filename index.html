@@ -3,68 +3,163 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Taras Shybaievs Portfolio für ein duales Studium in der IT. Mit Linux-Dotfiles, UltimateDesktopEffects und Einblicken in seine Webentwicklung.">
-  <meta name="theme-color" content="#b8bb26">
-  <title>Taras Shybaiev | Portfolio</title>
+  <meta name="description" data-i18n-content="metadata" content="Taras Shybaievs Portfolio für ein duales Studium in der IT. Mit Linux-Dotfiles, UltimateDesktopEffects und Einblicken in seine Webentwicklung.">
+  <meta name="theme-color" content="#faf4e9">
+  <title data-i18n="documentTitle">Taras Shybaiev | Portfolio</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script src="preferences.js"></script>
+  <link rel="stylesheet" href="themes.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="effects.css">
+  <link rel="stylesheet" href="motion.css">
+  <script defer src="translations.js"></script>
+  <script defer src="motion.js"></script>
+  <script defer src="portfolio.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#inhalt">Zum Inhalt</a>
+  <div class="glass-wallpaper" aria-hidden="true"></div>
+  <a class="skip-link" href="#inhalt" data-i18n="skip">Zum Inhalt</a>
 
+  <section class="welcome-intro" hidden aria-labelledby="intro-title">
+    <div class="intro-stage">
+      <div class="intro-inner">
+        <div class="intro-heading">
+          <h2 id="intro-title" data-i18n="welcome">Willkommen</h2>
+          <p class="intro-name">Taras Shybaiev</p>
+        </div>
+        <div class="intro-about"></div>
+        <button class="intro-next" type="button" data-i18n="introScroll">Scrollen, um fortzufahren</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="portfolio-content">
   <header class="site-header">
-    <nav class="header-inner" aria-label="Hauptnavigation">
-      <ul class="nav-list">
-        <li><a href="#ueber-mich">Über mich</a></li>
-        <li><a href="#erfahrung">Erfahrung</a></li>
-        <li><a href="#projekte">Projekte</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#bildung">Bildung</a></li>
-      </ul>
-    </nav>
+    <div class="header-color" aria-hidden="true"></div>
+    <div class="header-inner">
+      <button class="header-control menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
+        <span class="material-symbol" aria-hidden="true">menu</span>
+        <span data-i18n="menu">Menü</span>
+      </button>
+      <nav id="site-navigation" class="site-navigation" aria-label="Hauptnavigation" data-i18n-label="navigation">
+        <ul class="nav-list">
+          <li><a href="#ueber-mich" data-i18n="about">Über mich</a></li>
+          <li><a href="#erfahrung" data-i18n="experience">Erfahrung</a></li>
+          <li><a href="#projekte" data-i18n="projects">Projekte</a></li>
+          <li><a href="#skills" data-i18n="skills">Skills</a></li>
+          <li><a href="#bildung" data-i18n="education">Bildung</a></li>
+        </ul>
+      </nav>
+      <div class="appearance">
+        <button class="header-control appearance-toggle" type="button" aria-expanded="false" aria-controls="appearance-panel">
+          <span class="material-symbol" aria-hidden="true">palette</span>
+          <span data-i18n="appearance">Darstellung</span>
+        </button>
+        <div id="appearance-panel" class="preferences-panel" inert aria-label="Darstellung" data-i18n-label="appearance" role="group">
+          <div class="preference-field">
+            <label for="palette-select" data-i18n="palette">Farbschema</label>
+            <span class="palette-samples" aria-hidden="true"><i></i><i></i><i></i></span>
+            <select id="palette-select" name="palette">
+              <option value="gruvbox">Gruvbox</option>
+              <option value="tokyo-night">Tokyo Night</option>
+              <option value="everforest">Everforest</option>
+              <option value="nord">Nord</option>
+              <option value="catppuccin">Catppuccin</option>
+              <option value="dracula">Dracula</option>
+              <option value="one-dark">One Dark</option>
+              <option value="solarized">Solarized</option>
+              <option value="rose-pine">Rosé Pine</option>
+            </select>
+          </div>
+          <fieldset class="mode-picker">
+            <legend data-i18n="mode">Modus</legend>
+            <div class="mode-options">
+              <label>
+                <input class="visually-hidden" type="radio" name="color-mode" value="system" checked>
+                <span><span class="material-symbol" aria-hidden="true">devices</span><span data-i18n="system">System</span></span>
+              </label>
+              <label>
+                <input class="visually-hidden" type="radio" name="color-mode" value="light">
+                <span><span class="material-symbol" aria-hidden="true">light_mode</span><span data-i18n="light">Hell</span></span>
+              </label>
+              <label>
+                <input class="visually-hidden" type="radio" name="color-mode" value="dark">
+                <span><span class="material-symbol" aria-hidden="true">dark_mode</span><span data-i18n="dark">Dunkel</span></span>
+              </label>
+            </div>
+          </fieldset>
+          <div class="preference-field">
+            <label for="language-select" data-i18n="language">Sprache</label>
+            <select id="language-select" name="language">
+              <option value="de" lang="de">Deutsch</option>
+              <option value="en" lang="en">English</option>
+              <option value="ru" lang="ru">Русский</option>
+            </select>
+          </div>
+          <label class="glass-toggle">
+            <span>Liquid Glass</span>
+            <input id="glass-toggle" type="checkbox" role="switch" name="glass">
+          </label>
+          <div class="glass-controls" hidden>
+            <div class="preference-field">
+              <label for="glass-transparency" data-i18n="glassTransparency">Transparenz</label>
+              <output for="glass-transparency">100 %</output>
+              <input id="glass-transparency" name="transparency" type="range" min="0" max="100" value="100">
+            </div>
+            <div class="preference-field">
+              <label for="glass-refraction" data-i18n="glassRefraction">Lichtbrechung</label>
+              <output for="glass-refraction">100 %</output>
+              <input id="glass-refraction" name="refraction" type="range" min="0" max="200" value="100">
+            </div>
+            <div class="preference-field">
+              <label for="glass-distortion" data-i18n="glassDistortion">Verzerrung</label>
+              <output for="glass-distortion">100 %</output>
+              <input id="glass-distortion" name="distortion" type="range" min="0" max="200" value="100">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main id="inhalt" class="wrap" tabindex="-1">
     <section id="ueber-mich" class="hero" aria-labelledby="name">
-      <h1 id="name">Willkommen</h1>
+      <h1 id="name" data-i18n="welcome">Willkommen</h1>
       <p class="hero-name">Taras Shybaiev</p>
       <div class="about-row">
         <details class="portrait-reveal">
-          <summary title="Foto anzeigen">
-            <img src="assets/taras-portrait.jpg" width="1086" height="1448" alt="">
-            <span class="portrait-label" aria-hidden="true">FOTO <span>→</span></span>
-            <span class="visually-hidden">Porträt von Taras Shybaiev anzeigen</span>
+          <summary aria-label="Porträt von Taras Shybaiev ein- oder ausblenden" data-i18n-label="portrait">
+            <img src="assets/taras-portrait.jpg" width="1086" height="1448" alt="Porträt von Taras Shybaiev" data-i18n-alt="portraitAlt">
           </summary>
-          <span class="visually-hidden">Porträt von Taras Shybaiev</span>
         </details>
         <div class="about-copy">
-          <p>Hallo, ich bin Taras und 19 Jahre alt. Ich bin ein enthusiastischer Programmierer und habe diese Webseite erstellt, um alles zu zeigen, was ich bisher in meinem Leben programmiert oder konfiguriert habe. Meine Erfahrung erstreckt sich auf unterschiedliche Bereiche, da ich alles Mögliche ausprobieren wollte. Jetzt bin ich mir absolut sicher, dass es die richtige Entscheidung war, mich mit Programmieren und PCs zu beschäftigen.</p>
+          <p data-i18n="intro">Hallo, ich bin Taras und 19 Jahre alt. Ich bin ein enthusiastischer Programmierer und habe diese Webseite erstellt, um alles zu zeigen, was ich bisher in meinem Leben programmiert oder konfiguriert habe. Meine Erfahrung erstreckt sich auf unterschiedliche Bereiche, da ich alles Mögliche ausprobieren wollte. Jetzt bin ich mir absolut sicher, dass es die richtige Entscheidung war, mich mit Programmieren und PCs zu beschäftigen.</p>
         </div>
       </div>
 
-      <div class="skills-ribbon" aria-label="Schwerpunkte: Software, Hardware, Git, Webentwicklung und Linux">
+      <div class="skills-ribbon" role="group" aria-label="Schwerpunkte in Software, Hardware, Git, Webentwicklung und Linux" data-i18n-label="ribbon">
         <div class="ribbon-track">
           <div class="ribbon-group" aria-hidden="true">
-            <span>Software</span><span>Hardware</span><span>Git</span><span>Webdev</span><span>Linux</span>
+            <span data-i18n="software">Software</span><span data-i18n="hardware">Hardware</span><span>Git</span><span data-i18n="webShort">Webdev</span><span>Linux</span>
           </div>
           <div class="ribbon-group" aria-hidden="true">
-            <span>Software</span><span>Hardware</span><span>Git</span><span>Webdev</span><span>Linux</span>
+            <span data-i18n="software">Software</span><span data-i18n="hardware">Hardware</span><span>Git</span><span data-i18n="webShort">Webdev</span><span>Linux</span>
           </div>
         </div>
       </div>
-      <div class="project-shortcuts" aria-label="Projektübersicht">
+      <div class="project-shortcuts" role="group" aria-label="Projektübersicht" data-i18n-label="projectShortcuts">
         <a href="#ultimate-desktop-effects">Desktop Effects</a>
-        <a href="#linux-dotfiles">Dotfiles</a>
-        <a href="#portfolio-webseite">Webseiten</a>
-        <button type="button" disabled title="Details folgen">Ryoku Arch</button>
+        <a href="#linux-dotfiles" data-i18n="dotfilesShortcut">Dotfiles</a>
+        <a href="#portfolio-webseite" data-i18n="websites">Webseiten</a>
+        <button type="button" disabled title="Details folgen" data-i18n-title="detailsPending">Ryoku Arch</button>
       </div>
     </section>
 
     <section id="projekte" class="page-section" aria-labelledby="projekte-titel">
       <div class="section-heading">
-        <h2 id="projekte-titel">Projekte</h2>
+        <h2 id="projekte-titel" data-i18n="projects">Projekte</h2>
         <a class="text-link" href="https://github.com/povargg?tab=repositories">
-          Alle Repositories <span aria-hidden="true">↗</span>
+          <span data-i18n="repositories">Alle Repositories</span> <span aria-hidden="true">↗</span>
         </a>
       </div>
 
@@ -76,23 +171,23 @@
               <p class="eyebrow">Windows · C++17 · DirectX</p>
             </div>
             <h3 id="windows-titel">UltimateDesktop<wbr>Effects</h3>
-            <p>Schnee, Regen, fallende Blätter und Halloween für Windows 10 und 11. Schnee bleibt auf Fenstern liegen, Regen sammelt sich an der Taskleiste und im Halloween-Modus seilen sich Pixelspinnen ab. Jeder Effekt hat eigene Einstellungen und lässt sich über das Symbol im Infobereich auswählen.</p>
-            <p>Die Modi für Regen, Blätter und Halloween habe ich entwickelt und in einer App zusammengeführt. Die Grundlage für das Windows-Overlay und den Schnee war <a href="https://github.com/flipkips/desktop-snow-overlay">LayerSnow von flipkips</a>.</p>
+            <p data-i18n="windowsDescription">Schnee, Regen, fallende Blätter und Halloween für Windows 10 und 11. Schnee bleibt auf Fenstern liegen, Regen sammelt sich an der Taskleiste und im Halloween-Modus seilen sich Pixelspinnen ab. Jeder Effekt hat eigene Einstellungen und lässt sich über das Symbol im Infobereich auswählen.</p>
+            <p><span data-i18n="windowsCredit">Die Modi für Regen, Blätter und Halloween habe ich entwickelt und in einer App zusammengeführt. Die Grundlage für das Windows-Overlay und den Schnee war</span> <a href="https://github.com/flipkips/desktop-snow-overlay" data-i18n="layerSnow">LayerSnow von flipkips</a>.</p>
             <div class="action-row">
               <a class="button button--dark" href="https://github.com/povargg/UltimateDesktopEffects/releases">
-                Windows-Download <span aria-hidden="true">↗</span>
+                <span data-i18n="windowsDownload">Windows-Download</span> <span aria-hidden="true">↗</span>
               </a>
               <a class="button button--outline" href="https://github.com/povargg/UltimateDesktopEffects">
-                Quellcode <span aria-hidden="true">↗</span>
+                <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
           <figure class="windows-art">
-            <a class="image-link" href="assets/ultimate-effects.png" target="_blank" rel="noopener" aria-label="Simulationsvorschau in voller Größe öffnen (neuer Tab)">
+            <a class="image-link" href="assets/ultimate-effects.png" target="_blank" rel="noopener" aria-label="Simulationsvorschau in voller Größe öffnen (neuer Tab)" data-i18n-label="simulationOpen">
               <img src="assets/ultimate-effects.png" width="1280" height="800" loading="lazy" decoding="async"
-                   alt="Vier Simulationsszenen mit Schnee, Regen, bunten Blättern und Halloween-Figuren auf Fenstern">
+                   alt="Vier Simulationsszenen mit Schnee, Regen, bunten Blättern und Halloween-Figuren auf Fenstern" data-i18n-alt="simulationAlt">
             </a>
-            <figcaption>Vorschau aus der Simulation</figcaption>
+            <figcaption data-i18n="simulationCaption">Vorschau aus der Simulation</figcaption>
           </figure>
         </article>
 
@@ -100,15 +195,15 @@
           <div class="feature-head">
             <div class="feature-copy">
               <p class="eyebrow">Linux · Lua · RON</p>
-              <h3 id="linux-titel">Linux-Dotfiles</h3>
-              <p>Meine Konfigurationen für Neovim, den Musikplayer rmpc und das Terminal. Im Repository stehen auch die Einstellungen für Kitty, fish und Starship auf Basis der Dotfiles von end-4 sowie eigene Abschnitte für MPD und CAVA.</p>
+              <h3 id="linux-titel" data-i18n="dotfilesTitle">Linux-Dotfiles</h3>
+              <p data-i18n="dotfilesDescription">Meine Konfigurationen für Neovim, den Musikplayer rmpc und das Terminal. Im Repository stehen auch die Einstellungen für Kitty, fish und Starship auf Basis der Dotfiles von end-4 sowie eigene Abschnitte für MPD und CAVA.</p>
             </div>
             <div class="action-row">
               <a class="button button--dark" href="https://github.com/povargg/dotfiles">
-                Quellcode <span aria-hidden="true">↗</span>
+                <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
               </a>
-              <a class="button button--outline" href="https://github.com/povargg/dotfiles/blob/main/docs/README.de.md">
-                Anleitung <span aria-hidden="true">↗</span>
+              <a class="button button--outline" href="https://github.com/povargg/dotfiles/blob/main/docs/README.de.md" data-i18n-href="dotfilesGuideUrl">
+                <span data-i18n="guide">Anleitung</span> <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -116,27 +211,27 @@
           <div class="dotfiles-grid">
             <section class="dotfile" aria-labelledby="povvim-titel">
               <figure>
-                <a class="image-link" href="assets/povvim.webp" target="_blank" rel="noopener" aria-label="POVVIM-Screenshot in voller Größe öffnen (neuer Tab)">
+                <a class="image-link" href="assets/povvim.webp" target="_blank" rel="noopener" aria-label="POVVIM-Screenshot in voller Größe öffnen (neuer Tab)" data-i18n-label="povvimOpen">
                   <img src="assets/povvim.webp" width="2048" height="856" loading="lazy" decoding="async"
-                       alt="Neovim mit POVVIM-Startbildschirm und dem Farbschema Aardvark Ink">
+                       alt="Neovim mit POVVIM-Startbildschirm und dem Farbschema Aardvark Ink" data-i18n-alt="povvimAlt">
                 </a>
               </figure>
               <div class="dotfile-copy">
                 <h4 id="povvim-titel">POVVIM</h4>
-                <p>Mein Neovim-Setup auf Basis von LazyVim. Mit Neogit und CodeDiff kann ich Änderungen im Editor vergleichen und committen. Für HTML und Markdown nutze ich Live Preview. Build-Aufgaben starte ich direkt aus Neovim über Overseer.</p>
+                <p data-i18n="povvimDescription">Mein Neovim-Setup auf Basis von LazyVim. Mit Neogit und CodeDiff kann ich Änderungen im Editor vergleichen und committen. Für HTML und Markdown nutze ich Live Preview. Build-Aufgaben starte ich direkt aus Neovim über Overseer.</p>
               </div>
             </section>
             <section class="dotfile" aria-labelledby="rmpc-titel">
               <figure>
-                <a class="image-link" href="assets/rmpc.webp" target="_blank" rel="noopener" aria-label="rmpc-Screenshot in voller Größe öffnen (neuer Tab)">
+                <a class="image-link" href="assets/rmpc.webp" target="_blank" rel="noopener" aria-label="rmpc-Screenshot in voller Größe öffnen (neuer Tab)" data-i18n-label="rmpcOpen">
                   <img src="assets/rmpc.webp" width="2048" height="856" loading="lazy" decoding="async"
-                       alt="rmpc mit Warteschlange, Albumcover und rosa Fortschrittsleiste">
+                       alt="rmpc mit Warteschlange, Albumcover und rosa Fortschrittsleiste" data-i18n-alt="rmpcAlt">
                 </a>
               </figure>
               <div class="dotfile-copy">
                 <h4 id="rmpc-titel">rmpc</h4>
-                <p>Ein eigenes Layout für den MPD-Client. Neben der Warteschlange steht das Albumcover. Eigene Symbole zeigen Wiedergabestatus und Titelbewertungen. Gedämpfte Grün- und Goldtöne treffen auf eine rosa Fortschrittsleiste.</p>
-                <ul class="palette" aria-label="Farbpalette des rmpc-Themes">
+                <p data-i18n="rmpcDescription">Ich habe rmpc für mein end-4-Setup im Gruvbox-Stil eingerichtet. Den grundlegenden Aufbau habe ich beibehalten, eigene Symbole ergänzt und die Reiter auf Japanisch beschriftet. So gefällt es mir einfach besser.</p>
+                <ul class="palette" aria-label="Farbpalette des rmpc-Themes" data-i18n-label="rmpcPalette">
                   <li><span style="--swatch: #1d2021" aria-hidden="true"></span><code>#1D2021</code></li>
                   <li><span style="--swatch: #665c54" aria-hidden="true"></span><code>#665C54</code></li>
                   <li><span style="--swatch: #d5c4a1" aria-hidden="true"></span><code>#D5C4A1</code></li>
@@ -156,11 +251,11 @@
         <article class="feature web-project" id="portfolio-webseite" aria-labelledby="web-titel">
           <div>
             <p class="eyebrow">Web · HTML · CSS</p>
-            <h3 id="web-titel">Portfolio-Webseite</h3>
-            <p>Für meine Bewerbung habe ich diese Seite als eigenes Webprojekt aufgebaut. Den Quellcode findest du auf GitHub.</p>
+            <h3 id="web-titel" data-i18n="portfolioTitle">Portfolio-Webseite</h3>
+            <p data-i18n="portfolioDescription">Für meine Bewerbung habe ich diese Seite als eigenes Webprojekt aufgebaut. Den Quellcode findest du auf GitHub.</p>
           </div>
           <a class="button button--outline" href="https://github.com/povargg/portfolio">
-            Quellcode <span aria-hidden="true">↗</span>
+            <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
           </a>
         </article>
       </div>
@@ -168,38 +263,95 @@
 
     <section id="skills" class="page-section" aria-labelledby="skills-titel">
       <div class="section-heading">
-        <h2 id="skills-titel">Skills</h2>
+        <h2 id="skills-titel" data-i18n="skills">Skills</h2>
+        <p class="skill-hint" aria-hidden="true" data-i18n="skillHint">Klicke, um die Karte umzudrehen</p>
       </div>
-      <dl class="skills-grid">
-        <div>
-          <dt>Softwareentwicklung</dt>
-          <dd>C++17, Win32 und DirectX am Beispiel von <a href="#ultimate-desktop-effects">UltimateDesktopEffects</a>.</dd>
-        </div>
-        <div>
-          <dt>Linux</dt>
-          <dd>Neovim, Shell und Desktop-Konfiguration. Beispiele stehen in den <a href="#linux-dotfiles">Linux-Dotfiles</a>.</dd>
-        </div>
-        <div>
-          <dt>Webentwicklung</dt>
-          <dd>HTML, CSS und responsive Layouts für dieses <a href="#portfolio-webseite">Portfolio</a>.</dd>
-        </div>
-        <div>
-          <dt>Versionsverwaltung</dt>
-          <dd>Versionsverwaltung mit Git und Projektdokumentation auf <a href="https://github.com/povargg">GitHub</a>.</dd>
-        </div>
-      </dl>
+      <div class="skills-grid">
+        <article class="skill-card" aria-labelledby="skill-software">
+          <div class="skill-shell">
+            <div class="skill-turn">
+              <div class="skill-face skill-front">
+                <div class="skill-reflection" aria-hidden="true"></div>
+                <div class="skill-content">
+                  <h3 id="skill-software" data-i18n="skillSoftware">Softwareentwicklung</h3>
+                  <p><span data-i18n="skillSoftwareText">C++17, Win32 und DirectX am Beispiel von</span> <a href="#ultimate-desktop-effects">UltimateDesktopEffects</a>.</p>
+                </div>
+              </div>
+              <div class="skill-face skill-back" aria-hidden="true" inert>
+                <span class="material-symbol skill-emblem" aria-hidden="true">code</span>
+                <p data-i18n="skillSoftware">Softwareentwicklung</p>
+              </div>
+            </div>
+          </div>
+          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Softwareentwicklung drehen" data-i18n-label="flipSoftware"></button>
+        </article>
+        <article class="skill-card" aria-labelledby="skill-linux">
+          <div class="skill-shell">
+            <div class="skill-turn">
+              <div class="skill-face skill-front">
+                <div class="skill-reflection" aria-hidden="true"></div>
+                <div class="skill-content">
+                  <h3 id="skill-linux">Linux</h3>
+                  <p><span data-i18n="skillLinuxText">Neovim, Shell und Desktop-Konfiguration. Beispiele stehen in den</span> <a href="#linux-dotfiles" data-i18n="dotfilesLink">Linux-Dotfiles</a>.</p>
+                </div>
+              </div>
+              <div class="skill-face skill-back" aria-hidden="true" inert>
+                <span class="material-symbol skill-emblem" aria-hidden="true">terminal</span>
+                <p>Linux</p>
+              </div>
+            </div>
+          </div>
+          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Linux drehen" data-i18n-label="flipLinux"></button>
+        </article>
+        <article class="skill-card" aria-labelledby="skill-web">
+          <div class="skill-shell">
+            <div class="skill-turn">
+              <div class="skill-face skill-front">
+                <div class="skill-reflection" aria-hidden="true"></div>
+                <div class="skill-content">
+                  <h3 id="skill-web" data-i18n="skillWeb">Webentwicklung</h3>
+                  <p><span data-i18n="skillWebText">HTML, CSS und responsive Layouts für dieses</span> <a href="#portfolio-webseite" data-i18n="portfolioLink">Portfolio</a>.</p>
+                </div>
+              </div>
+              <div class="skill-face skill-back" aria-hidden="true" inert>
+                <span class="material-symbol skill-emblem" aria-hidden="true">web</span>
+                <p data-i18n="skillWeb">Webentwicklung</p>
+              </div>
+            </div>
+          </div>
+          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Webentwicklung drehen" data-i18n-label="flipWeb"></button>
+        </article>
+        <article class="skill-card" aria-labelledby="skill-git">
+          <div class="skill-shell">
+            <div class="skill-turn">
+              <div class="skill-face skill-front">
+                <div class="skill-reflection" aria-hidden="true"></div>
+                <div class="skill-content">
+                  <h3 id="skill-git" data-i18n="skillGit">Versionsverwaltung</h3>
+                  <p><span data-i18n="skillGitText">Versionsverwaltung mit Git und Projektdokumentation auf</span> <a href="https://github.com/povargg">GitHub</a>.</p>
+                </div>
+              </div>
+              <div class="skill-face skill-back" aria-hidden="true" inert>
+                <span class="material-symbol skill-emblem" aria-hidden="true">account_tree</span>
+                <p data-i18n="skillGit">Versionsverwaltung</p>
+              </div>
+            </div>
+          </div>
+          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Versionsverwaltung drehen" data-i18n-label="flipGit"></button>
+        </article>
+      </div>
     </section>
 
     <div class="background-grid">
       <section id="erfahrung" class="background-panel" aria-labelledby="erfahrung-titel">
-        <h2 id="erfahrung-titel">Erfahrung</h2>
-        <h3>Webentwicklungspraktikum</h3>
-        <p>Im Praktikum habe ich erste Einblicke in die Webentwicklung bekommen. In eigenen Projekten vertiefe ich auch Themen rund um Linux, Windows und PC-Hardware.</p>
+        <h2 id="erfahrung-titel" data-i18n="experience">Erfahrung</h2>
+        <h3 data-i18n="internship">Webentwicklungspraktikum</h3>
+        <p data-i18n="experienceDescription">Im Praktikum habe ich erste Einblicke in die Webentwicklung bekommen. In eigenen Projekten vertiefe ich auch Themen rund um Linux, Windows und PC-Hardware.</p>
       </section>
       <section id="bildung" class="background-panel background-panel--education" aria-labelledby="bildung-titel">
-        <h2 id="bildung-titel">Bildung</h2>
-        <h3>Duales Studium in der IT</h3>
-        <p>Im dualen Studium möchte ich Softwareentwicklung vertiefen und das Gelernte direkt in Projekten im Betrieb anwenden.</p>
+        <h2 id="bildung-titel" data-i18n="education">Bildung</h2>
+        <h3 data-i18n="study">Duales Studium in der IT</h3>
+        <p data-i18n="educationDescription">Im dualen Studium möchte ich Softwareentwicklung vertiefen und das Gelernte direkt in Projekten im Betrieb anwenden.</p>
       </section>
     </div>
   </main>
@@ -207,14 +359,40 @@
   <footer id="kontakt" class="site-footer">
     <div class="footer-inner">
       <p>© 2026 Taras Shybaiev</p>
-      <div class="social-links" aria-label="Social Media">
-        <button class="social-icon" type="button" disabled aria-label="E-Mail – Adresse folgt" title="Adresse folgt"><img src="assets/gmail.png" width="64" height="64" alt=""></button>
-        <button class="social-icon" type="button" disabled aria-label="WhatsApp – Link folgt" title="Link folgt"><img src="assets/whatsapp.png" width="64" height="64" alt=""></button>
-        <button class="social-icon" type="button" disabled aria-label="Discord – Link folgt" title="Link folgt"><img src="assets/discord.png" width="64" height="64" alt=""></button>
-        <button class="social-icon" type="button" disabled aria-label="Reddit – Link folgt" title="Link folgt"><img src="assets/reddit.png" width="64" height="64" alt=""></button>
-        <a class="social-icon" href="https://github.com/povargg" aria-label="GitHub-Profil"><img src="assets/github.png" width="64" height="64" alt=""></a>
+      <div class="social-links" role="group" aria-label="Social Media" data-i18n-label="socials">
+        <span class="social-item" title="Adresse folgt" data-i18n-title="addressPending">
+          <button class="social-icon" type="button" disabled aria-label="E-Mail (Adresse folgt)" data-i18n-label="emailPending">
+            <img src="assets/gmail.png" width="64" height="64" alt="">
+            <span class="skill-reflection social-reflection" aria-hidden="true"></span>
+          </button>
+        </span>
+        <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
+          <button class="social-icon" type="button" disabled aria-label="WhatsApp (Link folgt)" data-i18n-label="whatsappPending">
+            <img src="assets/whatsapp.png" width="64" height="64" alt="">
+            <span class="skill-reflection social-reflection" aria-hidden="true"></span>
+          </button>
+        </span>
+        <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
+          <button class="social-icon" type="button" disabled aria-label="Discord (Link folgt)" data-i18n-label="discordPending">
+            <img src="assets/discord.png" width="64" height="64" alt="">
+            <span class="skill-reflection social-reflection" aria-hidden="true"></span>
+          </button>
+        </span>
+        <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
+          <button class="social-icon" type="button" disabled aria-label="Reddit (Link folgt)" data-i18n-label="redditPending">
+            <img src="assets/reddit.png" width="64" height="64" alt="">
+            <span class="skill-reflection social-reflection" aria-hidden="true"></span>
+          </button>
+        </span>
+        <span class="social-item">
+          <a class="social-icon" href="https://github.com/povargg" aria-label="GitHub-Profil" data-i18n-label="githubProfile">
+            <img src="assets/github.png" width="64" height="64" alt="">
+            <span class="skill-reflection social-reflection" aria-hidden="true"></span>
+          </a>
+        </span>
       </div>
     </div>
   </footer>
+  </div>
 </body>
 </html>

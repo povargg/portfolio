@@ -2,9 +2,13 @@
 
 Mein persönliches Portfolio für die Bewerbung um ein duales Studium. Hier zeige ich meine Projekte, darunter Linux-Dotfiles und UltimateDesktopEffects.
 
-Die Seite ist mit HTML und CSS erstellt. Zum lokalen Anschauen einfach `index.html` im Browser öffnen.
+Die Seite nutzt HTML, CSS, JavaScript und Three.js. Starte für die lokale Vorschau `python -m http.server 8000` im Projektordner und öffne `http://localhost:8000`.
 
-![Startseite des Portfolios](screenshots/startseite.jpg)
+## Screenshots
+
+![Startseite mit hellem Liquid Glass](screenshots/startseite.jpg)
+
+![Dunkles Liquid Glass mit Sternenhimmel und Reglern für Transparenz, Lichtbrechung und Verzerrung](screenshots/liquid-glass-dunkel.jpg)
 
 ![UltimateDesktopEffects im Portfolio](screenshots/desktop-effects.jpg)
 

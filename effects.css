@@ -1,0 +1,385 @@
+.skill-card {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  perspective: 900px;
+  --card-accent: var(--primary);
+}
+
+.skill-card:nth-child(2) { --card-accent: var(--secondary); }
+.skill-card:nth-child(3) { --card-accent: color-mix(in srgb, var(--link) 52%, var(--primary)); }
+.skill-card:nth-child(4) { --card-accent: color-mix(in srgb, var(--warm) 55%, var(--secondary)); }
+
+.js .skill-card {
+  cursor: pointer;
+}
+
+.skill-shell, .skill-turn {
+  display: grid;
+  min-width: 0;
+  transform-style: preserve-3d;
+}
+
+.skill-shell {
+  transform: translateY(var(--lift, 0px)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform .24s cubic-bezier(.2, .75, .25, 1);
+}
+
+.skill-turn {
+  transform: rotateY(0deg);
+  transition: transform .58s cubic-bezier(.26, .77, .17, 1);
+}
+
+.skill-card.is-tilting {
+  z-index: 1;
+  --lift: -7px;
+}
+
+.skill-card.is-tilting .skill-shell {
+  transition-duration: .13s;
+}
+
+.skill-card.is-flipped .skill-turn {
+  transform: rotateY(180deg);
+}
+
+.skill-face {
+  position: relative;
+  grid-area: 1 / 1;
+  min-width: 0;
+  min-height: 10.75rem;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 1.15rem;
+  box-shadow: inset 0 1px 0 #fff4, 0 .35rem .85rem #1b151416;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.skill-front {
+  background: linear-gradient(153deg,
+    color-mix(in srgb, var(--surface-raised) 84%, var(--card-accent)),
+    var(--surface-raised) 56%,
+    color-mix(in srgb, var(--surface-raised) 92%, var(--card-accent)));
+}
+
+.skill-back {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: .65rem;
+  padding: 1rem;
+  background: radial-gradient(ellipse at 35% 8%,
+    color-mix(in srgb, var(--surface-raised) 57%, var(--card-accent)),
+    var(--surface-raised) 72%);
+  color: var(--ink);
+  font-size: .89rem;
+  font-weight: 600;
+  text-align: center;
+  transform: rotateY(180deg);
+}
+
+.skill-card.is-flipped .skill-front, .skill-card:not(.is-flipped) .skill-back {
+  pointer-events: none;
+}
+
+.skill-content {
+  position: relative;
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.skill-content h3 {
+  margin-block-end: .6rem;
+  font-size: clamp(1rem, 1.56vw, 1.16rem);
+  font-weight: 700;
+  hyphens: auto;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.skill-content p {
+  color: var(--ink);
+  font-size: .92rem;
+}
+
+.skill-content a {
+  color: var(--link);
+  overflow-wrap: anywhere;
+}
+
+.skill-reflection {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at var(--light-x, 50%) var(--light-y, 50%), #ffffff7d, transparent 39%),
+    conic-gradient(from var(--light-angle, 45deg) at var(--light-x, 50%) var(--light-y, 50%),
+      transparent, #f99bb750 49deg, #ffcf715c 85deg, #a7ffb14a 140deg, #7bdcff70 193deg, #b192ff54 238deg, transparent 315deg);
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+
+.skill-card.is-tilting .skill-reflection { opacity: .8; }
+[data-mode="dark"] .skill-card.is-tilting .skill-reflection { opacity: .52; }
+
+.reflection-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.skill-emblem {
+  display: grid;
+  place-items: center;
+  width: 4.55rem;
+  height: 4.55rem;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 65%, var(--line));
+  border-radius: 1.5rem;
+  background: linear-gradient(150deg,
+    color-mix(in srgb, var(--surface) 40%, var(--card-accent)),
+    color-mix(in srgb, var(--surface) 74%, var(--card-accent)));
+  font-size: 2.5rem;
+  box-shadow: inset 0 1px 1px #fff5, 0 .6rem 1.2rem #20192925;
+}
+
+:root:not(.js) .skill-flip {
+  display: none;
+}
+
+.skill-card:has(.skill-flip:focus-visible) {
+  outline: 2px solid var(--link);
+  outline-offset: 4px;
+  border-radius: 1.15rem;
+}
+
+.skill-hint {
+  color: var(--muted);
+  font-size: clamp(.77rem, 1.5vw, .95rem);
+  line-height: 1.35;
+  text-align: end;
+  opacity: 0;
+  transform: translateY(.23rem);
+  transition: opacity 250ms, transform 250ms;
+}
+
+.js #skills:not(.flip-learned):has(.skill-card:has(.skill-flip:focus-visible)) .skill-hint {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .js #skills:not(.flip-learned):has(.skill-card:hover) .skill-hint {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.glass-controls {
+  display: grid;
+  gap: .6rem;
+}
+
+.glass-controls[hidden] {
+  display: none;
+}
+
+.glass-controls output {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.glass-controls input {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 1.65rem;
+  margin: 0;
+  accent-color: var(--link);
+  cursor: pointer;
+}
+
+.preference-field select:disabled {
+  opacity: .64;
+  cursor: default;
+}
+
+.glass-wallpaper, .glass-layer, .social-reflection {
+  display: none;
+}
+
+[data-glass="on"] {
+  --glass-tile: clamp(45rem, 110vmax, 96rem);
+  --glass-offset: 0px;
+  --glass-solid: var(--glass-opacity, 0%);
+  --glass-panel-tint: calc(51% + var(--glass-solid) * .48);
+  --glass-header-tint: calc(35% + var(--glass-solid) * .62);
+  --glass-menu-tint: calc(44% + var(--glass-solid) * .55);
+  scroll-padding-block-start: 7rem;
+}
+
+[data-glass="on"][data-mode="dark"] {
+  --glass-panel-tint: calc(24% + var(--glass-solid) * .74);
+  --glass-header-tint: calc(31% + var(--glass-solid) * .66);
+  --glass-menu-tint: calc(50% + var(--glass-solid) * .48);
+}
+
+[data-glass="on"] body {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-base);
+}
+
+[data-glass="on"] .glass-wallpaper {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -2;
+  background: var(--glass-base) var(--glass-wallpaper) repeat 50% var(--glass-offset) / var(--glass-tile);
+}
+
+[data-glass="on"][data-glass-shader] .glass-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.glass-canvas:not([hidden]) {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+}
+
+.glass-definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+[data-glass="on"] .site-header {
+  position: sticky;
+  top: .55rem;
+  z-index: 4;
+  isolation: auto;
+}
+
+[data-glass="on"] .header-color,
+[data-glass="on"] .preferences-panel,
+[data-glass="on"] :is(.hero, .page-section, .background-panel) {
+  border: 1px solid var(--glass-edge);
+  box-shadow: inset 0 1px 1px var(--glass-shine), inset 0 -1px 2px var(--glass-shade),
+    0 .6rem 1.6rem var(--glass-shadow);
+}
+
+[data-glass="on"] .header-color {
+  background: color-mix(in srgb, var(--surface) var(--glass-header-tint), transparent);
+  -webkit-backdrop-filter: blur(6px) saturate(125%);
+  backdrop-filter: blur(6px) saturate(125%);
+}
+
+[data-glass="on"] .preferences-panel {
+  background: color-mix(in srgb, var(--surface) var(--glass-menu-tint), transparent);
+  -webkit-backdrop-filter: blur(9px) saturate(115%);
+  backdrop-filter: blur(9px) saturate(115%);
+}
+
+[data-glass="on"] .header-color::before {
+  inset: 0;
+  width: auto;
+  aspect-ratio: auto;
+  background: linear-gradient(163deg, #ffffff28, transparent 42% 88%, var(--glass-shine));
+  transform: none;
+  animation: none;
+}
+
+[data-glass="on"][data-glass-backdrop] .header-color {
+  backdrop-filter: url("#glass-header-lens");
+}
+
+[data-glass="on"][data-glass-backdrop] .preferences-panel {
+  backdrop-filter: url("#glass-menu-lens");
+}
+
+[data-glass="on"] :is(.hero, .page-section, .background-panel) {
+  background: color-mix(in srgb, var(--surface) var(--glass-panel-tint), transparent);
+  -webkit-backdrop-filter: blur(7px) saturate(121%);
+  backdrop-filter: blur(7px) saturate(121%);
+}
+
+[data-glass="on"][data-glass-shader] :is(.hero, .page-section, .background-panel) {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* During a section's entrance the DOM and its glass surface fade together. */
+[data-glass="on"][data-glass-shader] :is(.hero, .page-section, .background-panel).reveal-running {
+  box-shadow: inset 0 1px 1px var(--glass-shine), 0 .6rem 1.6rem var(--glass-shadow);
+}
+
+[data-glass="on"] :is(.feature--windows, .feature--linux) {
+  background: linear-gradient(145deg,
+    color-mix(in srgb, var(--surface) 83%, var(--primary)), var(--surface-raised) 81%);
+}
+
+[data-glass="on"] .feature--linux {
+  background: linear-gradient(145deg,
+    color-mix(in srgb, var(--surface) 81%, var(--secondary)), var(--surface-raised) 81%);
+}
+
+[data-glass="on"] .skill-face {
+  border-color: var(--glass-edge);
+  box-shadow: inset 0 1px 1px var(--glass-shine), 0 .35rem .95rem var(--glass-shadow);
+}
+
+.social-item {
+  display: inline-flex;
+  perspective: 420px;
+}
+
+[data-glass="on"] .social-icon {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--footer-ink) 32%, transparent);
+  border-radius: .85rem;
+  background: color-mix(in srgb, var(--footer-bg) 86%, var(--footer-ink));
+  box-shadow: inset 0 1px 1px #fff5, inset 0 -1px 2px #0007, 0 .28rem .8rem #0004;
+  transform: translateY(0) rotateX(0) rotateY(0);
+  transition: transform .24s cubic-bezier(.2, .75, .25, 1), border-color .2s;
+}
+
+[data-glass="on"] .social-item:has(.social-icon:disabled) {
+  cursor: not-allowed;
+}
+
+[data-glass="on"] .social-icon:disabled {
+  pointer-events: none;
+}
+
+[data-glass="on"] .social-reflection {
+  display: block;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+[data-glass="on"] .social-item.is-tilting .social-icon {
+  border-color: color-mix(in srgb, var(--footer-ink) 65%, transparent);
+  transform: translateY(-5px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition-duration: .13s;
+}
+
+[data-glass="on"] .social-item.is-tilting .social-reflection {
+  opacity: .84;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-shell, .skill-card.is-tilting .skill-shell { transform: none; }
+  .skill-reflection { display: none; }
+}

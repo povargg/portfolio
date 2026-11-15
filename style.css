@@ -30,24 +30,40 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: Nunito;
+  src: url("assets/nunito-cyrillic.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: Nunito;
+  src: url("assets/nunito-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  src: url("assets/material-symbols-rounded.woff2") format("woff2");
+  font-weight: 500;
+  font-display: block;
+}
+
 :root {
-  color-scheme: light;
-  --ink: #282828;
-  --ink-soft: #3c3836;
-  --paper: #fbf1c7;
-  --paper-dark: #ebdbb2;
-  --cream: #d5c4a1;
-  --green: #b8bb26;
-  --green-dark: #79740e;
-  --purple: #d3869b;
-  --purple-dark: #8f3f71;
-  --orange: #d65d0e;
-  --orange-dark: #af3a03;
-  --yellow: #fabd2f;
-  --line: #a89984;
+  --body-font: Prompt, "Segoe UI", system-ui, sans-serif;
   --display: "Cherry Bomb One", Prompt, system-ui, sans-serif;
+  --display-weight: 400;
   --mono: "Cascadia Mono", Consolas, monospace;
   --panel-padding: clamp(1.2rem, 4vw, 3rem);
+}
+
+:root:lang(ru) {
+  --body-font: Nunito, "Segoe UI", system-ui, sans-serif;
+  --display: var(--body-font);
+  --display-weight: 900;
 }
 
 *, *::before, *::after {
@@ -62,10 +78,10 @@ body {
   min-width: 0;
   margin: 0;
   padding: 10px;
-  background: repeating-linear-gradient(135deg, var(--purple) 0, var(--paper-dark) 38vmax, var(--green) 78vmax, var(--purple) 120vmax);
+  background: repeating-linear-gradient(135deg, var(--band-start) 0, var(--surface-raised) 38vmax, var(--band-end) 78vmax, var(--band-start) 120vmax);
   background-attachment: fixed;
   color: var(--ink);
-  font-family: Prompt, "Segoe UI", system-ui, sans-serif;
+  font-family: var(--body-font);
   line-height: 1.65;
 }
 
@@ -94,9 +110,24 @@ a {
   text-underline-offset: 0.2em;
 }
 
-a:focus-visible, button:focus-visible, summary:focus-visible {
+button, input, select {
+  font: inherit;
+}
+
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 4px;
+}
+
+.material-symbol {
+  display: inline-block;
+  flex: none;
+  font: 500 1.375rem / 1 "Material Symbols Rounded";
+  font-feature-settings: "liga";
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
 }
 
 [id] {
@@ -125,7 +156,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding: 0.6rem 0.85rem;
   transform: translateY(-200%);
   border-radius: 0.5rem;
-  color: var(--paper);
+  color: var(--surface);
   background: var(--ink);
 }
 
@@ -135,21 +166,30 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .site-header {
   position: relative;
+  z-index: 2;
   isolation: isolate;
-  overflow: hidden;
   border-radius: 2rem;
-  background: var(--green);
+  background: transparent;
 }
 
-.site-header::before {
-  content: "";
+.header-color {
   position: absolute;
   z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  background: var(--band-end);
+  pointer-events: none;
+}
+
+.header-color::before {
+  content: "";
+  position: absolute;
   top: 50%;
   left: 50%;
   width: max(100rem, 140vw);
   aspect-ratio: 1;
-  background: linear-gradient(0deg, var(--purple), var(--green));
+  background: linear-gradient(0deg, var(--band-start), var(--band-end));
   animation: gradient-rotation 16s linear infinite;
 }
 
@@ -159,11 +199,17 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .header-inner {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-areas: ". nav appearance";
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   min-height: 5rem;
-  padding: 0.45rem 1rem;
+  padding: 0.45rem clamp(.75rem, 2vw, 1.6rem);
+  gap: .25rem 1.1rem;
+}
+
+.site-navigation {
+  grid-area: nav;
 }
 
 .nav-list {
@@ -184,6 +230,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   border-radius: 0.75rem;
   color: var(--ink);
   font-family: var(--display);
+  font-weight: var(--display-weight);
   font-size: clamp(1.15rem, 2vw, 1.55rem);
   line-height: 1.1;
   text-align: center;
@@ -194,9 +241,204 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .nav-list a:hover,
 .nav-list a:focus-visible {
   transform: scale(1.06);
-  border-color: var(--paper);
+  border-color: var(--surface);
   background: var(--ink);
-  color: var(--paper);
+  color: var(--surface);
+}
+
+.menu-toggle, .appearance {
+  display: none;
+}
+
+.js .appearance {
+  display: block;
+  position: relative;
+  grid-area: appearance;
+  justify-self: end;
+}
+
+.header-control {
+  align-items: center;
+  gap: .46rem;
+  min-height: 2.75rem;
+  padding: .45rem .7rem;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  border-radius: .9rem;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  color: var(--ink);
+  font-size: .86rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.appearance-toggle {
+  display: flex;
+}
+
+.header-control:hover, .appearance.is-open .header-control {
+  border-color: var(--heading);
+  background: var(--surface);
+}
+
+.preferences-panel {
+  position: absolute;
+  inset-block-start: calc(100% + .72rem);
+  inset-inline-end: 0;
+  display: grid;
+  gap: .95rem;
+  width: min(21.5rem, calc(100vw - 2.65rem));
+  max-height: calc(100dvh - 5.1rem);
+  overflow: auto;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 .8rem 2.2rem #10101735;
+}
+
+.preference-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: .35rem .5rem;
+  font-size: .91rem;
+  font-weight: 600;
+}
+
+.preference-field select {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 2.7rem;
+  padding: .35rem .6rem;
+  border: 1px solid var(--line);
+  border-radius: .65rem;
+  background: var(--surface-raised);
+  color: var(--ink);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.palette-samples {
+  display: flex;
+  gap: .22rem;
+  padding-inline: .2rem;
+}
+
+.palette-samples i {
+  width: .72rem;
+  height: .72rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.palette-samples i:nth-child(2) { background: var(--secondary); }
+.palette-samples i:nth-child(3) { background: var(--surface-raised); }
+
+.mode-picker {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.mode-picker legend {
+  margin-block-end: .35rem;
+  padding: 0;
+  font-size: .91rem;
+  font-weight: 600;
+}
+
+.mode-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .2rem;
+  padding: .2rem;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  background: var(--surface-raised);
+}
+
+.mode-options label > span {
+  display: grid;
+  place-items: center;
+  gap: .22rem;
+  min-height: 3.2rem;
+  padding: .35rem .1rem;
+  border: 1px solid transparent;
+  border-radius: .6rem;
+  font-size: .75rem;
+  text-align: center;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.mode-options .material-symbol {
+  font-size: 1.05rem;
+}
+
+.mode-options input:checked + span {
+  border-color: var(--line);
+  background: var(--surface);
+  font-weight: 700;
+}
+
+.mode-options input:focus-visible + span {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.glass-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+  min-height: 2.7rem;
+  padding-block-start: .55rem;
+  border-block-start: 1px solid var(--hairline);
+  font-size: .91rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.glass-toggle input {
+  appearance: none;
+  position: relative;
+  flex: 0 0 auto;
+  width: 2.65rem;
+  height: 1.47rem;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-raised);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color .18s ease;
+}
+
+.glass-toggle input::before {
+  content: "";
+  position: absolute;
+  inset-block-start: .19rem;
+  inset-inline-start: .19rem;
+  width: .97rem;
+  height: .97rem;
+  border-radius: 50%;
+  background: currentColor;
+  transition: transform .18s ease;
+}
+
+.glass-toggle input:checked {
+  border-color: var(--button-bg);
+  background: var(--button-bg);
+  color: var(--button-ink);
+}
+
+.glass-toggle input:checked::before {
+  transform: translateX(1.16rem);
 }
 
 .hero, .page-section, .background-panel {
@@ -208,11 +450,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   overflow: hidden;
   margin: 2rem auto;
   padding: var(--hero-padding) var(--hero-padding) 2rem;
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .hero h1 {
-  color: var(--green-dark);
+  color: var(--heading);
   font-size: clamp(3.3rem, 6vw, 5rem);
   font-weight: 700;
   text-align: center;
@@ -221,13 +463,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .hero h1:hover {
   transform: scale(1.025);
-  color: var(--orange);
+  color: var(--warm);
 }
 
 .hero-name {
   margin-top: 0.3rem;
-  color: var(--purple-dark);
+  color: var(--link);
   font-family: var(--display);
+  font-weight: var(--display-weight);
   font-size: clamp(1.15rem, 2vw, 1.6rem);
   text-align: center;
 }
@@ -241,22 +484,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .portrait-reveal {
+  --portrait-size: clamp(10rem, 20vw, 17rem);
   position: relative;
   flex: 0 0 auto;
-  width: 3.4rem;
-  height: 14rem;
-  min-height: 14rem;
-  transition: width 400ms ease, height 400ms ease;
+  width: 1.25rem;
+  height: var(--portrait-size);
+  transition: width 360ms cubic-bezier(.23, .8, .32, 1);
 }
 
 .portrait-reveal summary {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  border: 3px solid var(--orange-dark);
   border-radius: 1.2rem;
-  background: var(--orange-dark);
-  color: var(--paper);
+  background: var(--primary);
   cursor: pointer;
   list-style: none;
 }
@@ -270,67 +511,45 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 38%;
+  object-position: center 18%;
   opacity: 0;
   transition: opacity 300ms ease;
 }
 
-.portrait-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem;
-  font: 600 0.85rem / 1 var(--mono);
-  writing-mode: vertical-rl;
-  transition: opacity 150ms;
-}
-
-.portrait-label span {
-  font-size: 1.15rem;
-}
-
 .portrait-reveal[open] {
-  width: min(18rem, 35%);
+  width: var(--portrait-size);
+  z-index: 1;
 }
 
 .portrait-reveal[open] img {
   opacity: 1;
 }
 
-.portrait-reveal[open] .portrait-label {
-  opacity: 0;
-}
-
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .portrait-reveal:hover {
-    width: min(18rem, 35%);
+    width: var(--portrait-size);
   }
 
   .portrait-reveal:hover img {
     opacity: 1;
   }
 
-  .portrait-reveal:hover .portrait-label {
-    opacity: 0;
-  }
 }
 
 .about-copy {
   flex: 1 1 0;
   min-width: 0;
   align-self: center;
-  color: var(--ink-soft);
+  color: var(--muted);
   font-size: clamp(1rem, 1.5vw, 1.25rem);
 }
 
 .skills-ribbon {
+  container-type: inline-size;
   width: calc(100% + 2 * var(--hero-padding));
   overflow: hidden;
   margin-left: calc(-1 * var(--hero-padding));
-  background: linear-gradient(45deg, var(--purple), var(--green), var(--purple));
+  background: linear-gradient(45deg, var(--band-start), var(--band-end), var(--band-start));
 }
 
 .ribbon-track {
@@ -340,11 +559,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .ribbon-group {
+  --ribbon-gap: clamp(2.5rem, 5vw, 5rem);
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: clamp(2.5rem, 5vw, 5rem);
-  padding: 1rem clamp(2.5rem, 5vw, 5rem) 1rem 0;
+  justify-content: space-around;
+  min-inline-size: 100vw;
+  min-inline-size: 100cqi;
+  gap: var(--ribbon-gap);
+  padding: 1rem calc(var(--ribbon-gap) / 2);
   color: var(--ink);
   font-size: clamp(1.45rem, 2.8vw, 2.1rem);
   font-style: italic;
@@ -371,9 +594,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   padding: 0.55rem 1rem;
   border: 3px solid transparent;
   border-radius: 1rem;
-  background: var(--green);
+  background: var(--primary-panel);
   color: var(--ink);
-  font: 400 clamp(1.15rem, 2vw, 1.65rem) / 1.1 var(--display);
+  font: var(--display-weight) clamp(1.15rem, 2vw, 1.65rem) / 1.1 var(--display);
   text-align: center;
   text-decoration: none;
   transition: transform 200ms, color 200ms, background-color 200ms, border-color 200ms;
@@ -383,20 +606,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .project-shortcuts a:focus-visible {
   transform: scale(1.05);
   border-color: var(--ink);
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .project-shortcuts button:disabled {
-  border-color: var(--cream);
-  background: var(--paper-dark);
-  color: #665c54;
+  border-color: var(--hairline);
+  background: var(--surface-raised);
+  color: var(--muted);
   cursor: not-allowed;
 }
 
 .page-section {
   margin: 2rem auto;
   padding: var(--panel-padding);
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .section-heading {
@@ -409,13 +632,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .section-heading h2, .background-panel h2 {
-  color: var(--green-dark);
+  color: var(--heading);
   font-size: clamp(2.5rem, 5vw, 4rem);
   transition: color 200ms;
 }
 
 .section-heading h2:hover, .background-panel h2:hover {
-  color: var(--orange);
+  color: var(--warm);
 }
 
 .text-link {
@@ -423,13 +646,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   align-items: center;
   gap: 0.4rem;
   min-height: 2.75rem;
-  color: var(--purple-dark);
+  color: var(--link);
   font-size: 0.95rem;
   font-weight: 600;
 }
 
 .eyebrow {
-  color: var(--ink-soft);
+  color: var(--muted);
   font: 600 0.77rem / 1.5 var(--mono);
   letter-spacing: 0.045em;
   text-transform: uppercase;
@@ -457,8 +680,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   margin-top: 0.85rem;
 }
 
-.feature p:not(.eyebrow), .skills-grid dd, .background-panel p {
-  color: var(--ink-soft);
+.feature p:not(.eyebrow), .background-panel p {
+  color: var(--muted);
 }
 
 .feature--windows {
@@ -467,8 +690,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   grid-template-areas: "art copy";
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3rem);
-  border-color: var(--green-dark);
-  background: var(--green);
+  border-color: var(--heading);
+  background: var(--primary-panel);
 }
 
 .windows-copy {
@@ -511,8 +734,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 .button--dark {
-  background: var(--ink);
-  color: var(--paper);
+  border-color: var(--button-bg);
+  background: var(--button-bg);
+  color: var(--button-ink);
 }
 
 .button--outline {
@@ -522,7 +746,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .button:hover, .button:focus-visible {
   transform: scale(1.04);
-  background: var(--paper);
+  border-color: var(--ink);
+  background: var(--surface);
   color: var(--ink);
 }
 
@@ -537,9 +762,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .image-link {
   display: block;
   overflow: hidden;
-  border: 2px solid var(--ink-soft);
+  border: 2px solid var(--muted);
   border-radius: 0.9rem;
-  background: var(--ink);
+  background: var(--footer-bg);
   cursor: zoom-in;
 }
 
@@ -553,13 +778,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 figcaption {
   margin-top: 0.65rem;
-  color: var(--ink-soft);
+  color: var(--muted);
   font: 400 0.75rem / 1.5 var(--mono);
 }
 
 .feature--linux {
-  border-color: var(--purple-dark);
-  background: var(--purple);
+  border-color: var(--link);
+  background: var(--secondary-panel);
 }
 
 .feature--linux .eyebrow,
@@ -592,9 +817,9 @@ figcaption {
 
 .dotfile {
   padding: 0.7rem;
-  border: 2px solid var(--ink-soft);
+  border: 2px solid var(--muted);
   border-radius: 1.1rem;
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .dotfile-copy {
@@ -627,7 +852,7 @@ figcaption {
 }
 
 .palette code {
-  color: var(--ink-soft);
+  color: var(--muted);
   font-family: var(--mono);
   font-size: clamp(0.63rem, 1.05vw, 0.73rem);
   overflow-wrap: anywhere;
@@ -639,7 +864,7 @@ figcaption {
   align-items: center;
   justify-content: space-between;
   gap: 1rem 2rem;
-  background: var(--paper-dark);
+  background: var(--surface-raised);
 }
 
 .web-project h3 {
@@ -657,32 +882,8 @@ figcaption {
   gap: 0.8rem;
 }
 
-.skills-grid > div {
-  padding: clamp(1rem, 2vw, 1.4rem);
-  border: 2px solid var(--cream);
-  border-radius: 1rem;
-  background: var(--paper-dark);
-  transition: border-color 200ms, transform 200ms;
-}
-
-.skills-grid > div:hover {
-  transform: translateY(-4px);
-  border-color: var(--orange);
-}
-
-.skills-grid dt {
-  font-size: clamp(1rem, 1.55vw, 1.15rem);
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.skills-grid dd, .background-panel p {
+.background-panel p {
   margin-top: 0.5rem;
-}
-
-.skills-grid a {
-  color: var(--purple-dark);
-  overflow-wrap: anywhere;
 }
 
 .background-grid {
@@ -691,11 +892,11 @@ figcaption {
 
 .background-panel {
   padding: var(--panel-padding);
-  background: var(--paper);
+  background: var(--surface);
 }
 
 .background-panel--education {
-  background: var(--paper-dark);
+  background: var(--surface-raised);
 }
 
 .background-panel h2 {
@@ -711,8 +912,8 @@ figcaption {
 
 .site-footer {
   margin: 0 -10px -10px;
-  background: var(--ink-soft);
-  color: var(--paper);
+  background: var(--footer-bg);
+  color: var(--footer-ink);
 }
 
 .footer-inner {
@@ -755,12 +956,12 @@ figcaption {
 
 .social-icon:hover, .social-icon:focus-visible {
   transform: scale(1.12);
-  border-color: var(--paper);
-  background: var(--ink);
+  border-color: var(--footer-ink);
+  background: color-mix(in srgb, var(--footer-bg) 78%, #000);
 }
 
 .site-footer a:focus-visible {
-  outline-color: var(--paper);
+  outline-color: var(--footer-ink);
 }
 
 .social-icon:disabled {
@@ -776,6 +977,42 @@ figcaption {
   .skills-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .header-inner {
+    grid-template-areas: "menu appearance" "nav nav";
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+    padding: .65rem;
+  }
+
+  .js .menu-toggle {
+    display: inline-flex;
+    grid-area: menu;
+    justify-self: start;
+  }
+
+  .js .nav-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: .3rem;
+    padding: .45rem 0 0;
+  }
+
+  .js .nav-list a {
+    display: flex;
+    min-height: 2.8rem;
+    padding: .4rem .8rem;
+    border: 1px solid transparent;
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    font-size: 1.2rem;
+  }
+
+  .js .nav-list a:hover, .js .nav-list a:focus-visible {
+    transform: none;
+    border-color: var(--ink);
+    color: var(--ink);
+    background: var(--surface);
+  }
 }
 
 @media (max-width: 47rem) {
@@ -788,16 +1025,6 @@ figcaption {
 @media (max-width: 40rem) {
   .wrap {
     width: calc(100% - 0.8rem);
-  }
-
-  .header-inner {
-    padding: 0.65rem;
-  }
-
-  .nav-list a {
-    min-height: 2.7rem;
-    padding: 0.3rem 0.55rem;
-    font-size: 1.15rem;
   }
 
   .hero, .page-section, .background-panel {
@@ -814,9 +1041,8 @@ figcaption {
 
   .portrait-reveal {
     float: left;
-    width: 3rem;
-    height: 12rem;
-    min-height: 12rem;
+    width: 1.15rem;
+    height: 9.25rem;
     margin: 0 0.8rem 0.4rem 0;
   }
 
@@ -826,10 +1052,10 @@ figcaption {
 
   .portrait-reveal[open] {
     float: none;
-    width: 100%;
-    height: 22rem;
-    min-height: 22rem;
-    margin: 0 0 1rem;
+    width: min(100%, 18rem);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto 1rem;
   }
 
   .dotfiles-grid, .background-grid {
@@ -837,13 +1063,13 @@ figcaption {
   }
 }
 
-@media (hover: hover) and (max-width: 40rem) {
+@media (hover: hover) and (pointer: fine) and (max-width: 40rem) {
   .portrait-reveal:hover {
     float: none;
-    width: 100%;
-    height: 22rem;
-    min-height: 22rem;
-    margin: 0 0 1rem;
+    width: min(100%, 18rem);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto 1rem;
   }
 }
 
@@ -859,7 +1085,7 @@ figcaption {
     transition: none !important;
   }
 
-  .site-header::before {
+  .header-color::before {
     transform: translate(-50%, -50%);
   }
 
@@ -871,6 +1097,7 @@ figcaption {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    min-inline-size: 0;
     gap: 0.3rem 1.4rem;
     padding: 0.7rem 1rem;
     white-space: normal;
