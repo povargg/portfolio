@@ -1,21 +1,32 @@
-import { createGlassBackdrop } from "./glass-backdrop.js";
 import { createGlassSurface } from "./glass-surface.js";
 import { glassScrollSpeed } from "./glass-motion.js";
 
 export function createLiquidGlass() {
   const root = document.documentElement;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-  const panels = [...document.querySelectorAll(".hero, .page-section, .background-panel")];
+  const mobileNavigation = matchMedia("(max-width: 58rem)");
+  const stage = document.querySelector(".intro-stage");
+  const panels = [...document.querySelector(".portfolio-content").querySelectorAll(".hero, .page-section, .background-panel")]
+    .map((element) => ({ element, type: "panel" }));
+  const getWelcomePanels = () => [...stage.querySelectorAll(".intro-scene-card")].map((element) => ({ element, type: "panel" }));
+  let welcomePanels = getWelcomePanels();
   const appearance = document.querySelector(".appearance");
   const header = document.querySelector(".site-header");
+  const navigation = header.querySelector(".site-navigation");
+  const headerLens = { element: header.querySelector(".header-color"), type: "header" };
+  const paletteLens = { element: appearance.querySelector(".appearance-toggle"), type: "control" };
+  const menuLens = { element: appearance.querySelector(".preferences-panel"), type: "menu" };
+  const navLenses = [...navigation.querySelectorAll(".nav-list a")].map((element) => ({ element, type: "control" }));
   const wallpaper = document.querySelector(".glass-wallpaper");
-  const backdrop = createGlassBackdrop();
   let surface;
+  let chrome;
   let enabled = false;
   let mode = "";
   let transparency = 1;
   let refraction = 1;
   let distortion = 1;
+  let dispersion = 1;
+  let edge = .3;
   let frameId;
   let redrawUntil = 0;
   let lastFrame;
@@ -34,10 +45,15 @@ export function createLiquidGlass() {
     if (frameId === undefined) frameId = requestAnimationFrame(draw);
   }
 
-  try {
-    surface = createGlassSurface(() => invalidate());
-  } catch {
-    // The native backdrop and CSS remain available if WebGL cannot initialize.
+  function initializeSurface(host) {
+    try {
+      const renderer = createGlassSurface(() => invalidate(), host);
+      renderer?.useWallpaper(mode);
+      return renderer || false;
+    } catch {
+      // The native backdrop and CSS remain available if WebGL cannot initialize.
+      return false;
+    }
   }
 
   function draw(now) {
@@ -61,21 +77,31 @@ export function createLiquidGlass() {
     const scrollOffset = reducedMotion.matches ? 0 : -Math.max(0, y) * .19;
 
     const introActive = root.classList.contains("intro-active");
-    if (backdrop && !introActive) {
-      backdrop(speed, refraction, distortion);
-      root.setAttribute("data-glass-backdrop", "");
+    const showPanels = !introActive || !stage.closest(".is-compact") && welcomePanels.some(({ element }) => !element.hidden);
+    const showHeader = !introActive && (header.getBoundingClientRect().bottom > 0 || !menuLens.element.inert);
+    const frame = {
+      width, height, scrollY: y, tileSize, scrollOffset, tint, transparency, refraction, distortion, dispersion, edge,
+      light: mode === "light",
+      pointerX: reducedMotion.matches ? 0 : pointerX,
+      pointerY: reducedMotion.matches ? 0 : pointerY,
+      speed,
+      time: now * .005,
+    };
+    if (showPanels) surface ??= initializeSurface();
+    root.toggleAttribute("data-glass-shader",
+      Boolean(showPanels && surface && surface.draw(frame, introActive ? welcomePanels : panels, introActive ? stage : null)));
+    let chromeReady = false;
+    if (showHeader) chrome ??= initializeSurface(header);
+    if (showHeader && chrome) {
+      const lenses = [headerLens];
+      const clip = mobileNavigation.matches ? navigation.getBoundingClientRect() : null;
+      for (const lens of navLenses) {
+        if (lens.element.matches(':hover, :focus-visible, [aria-current="location"]')) lenses.push({ ...lens, clip });
+      }
+      lenses.push(paletteLens, menuLens);
+      chromeReady = chrome.draw(frame, lenses);
     }
-    if (surface && !introActive) {
-      const ready = surface.draw({
-        width, height, scrollY: y, tileSize, scrollOffset, tint, transparency, refraction, distortion,
-        light: mode === "light",
-        pointerX: reducedMotion.matches ? 0 : pointerX,
-        pointerY: reducedMotion.matches ? 0 : pointerY,
-        speed,
-        time: now * .005,
-      }, panels);
-      root.toggleAttribute("data-glass-shader", ready);
-    }
+    root.toggleAttribute("data-glass-chrome", chromeReady);
     if (tileSize !== lastTile) {
       wallpaper.style.setProperty("--glass-tile", tileSize + "px");
       lastTile = tileSize;
@@ -90,7 +116,7 @@ export function createLiquidGlass() {
   window.addEventListener("scroll", () => invalidate(320), { passive: true });
   window.addEventListener("resize", () => invalidate());
   window.addEventListener("pointermove", (event) => {
-    if (!enabled || reducedMotion.matches || event.pointerType !== "mouse") return;
+    if (!enabled || reducedMotion.matches || event.pointerType !== "mouse" || root.matches(".skill-open, .image-view-open")) return;
     targetX = event.clientX / window.innerWidth * 2 - 1;
     targetY = event.clientY / window.innerHeight * 2 - 1;
     invalidate(210);
@@ -101,13 +127,21 @@ export function createLiquidGlass() {
     if (event.animationName === "content-appear") invalidate(700);
   });
   appearance.addEventListener("transitionrun", () => invalidate(360));
+  header.addEventListener("focusin", () => invalidate());
+  header.addEventListener("focusout", () => invalidate());
+  window.addEventListener("hashchange", () => invalidate());
+  document.addEventListener("portfolio:section", () => invalidate());
+  document.addEventListener("portfolio:intro", () => invalidate(650));
+  document.addEventListener("portfolio:intro-content", () => { welcomePanels = getWelcomePanels(); invalidate(); });
+  document.addEventListener("portfolio:scene", () => invalidate());
   header.addEventListener("transitionrun", (event) => {
     if (event.propertyName === "grid-template-rows") invalidate(360);
+    if (event.propertyName === "transform" && event.target.matches(".nav-list a, .appearance-toggle")) invalidate(240);
   });
   if ("ResizeObserver" in window) {
     const resize = new ResizeObserver(() => invalidate());
     resize.observe(header);
-    for (const panel of panels) resize.observe(panel);
+    for (const { element } of panels) resize.observe(element);
   }
 
   return {
@@ -122,13 +156,16 @@ export function createLiquidGlass() {
       transparency = preferences.transparency / 100;
       refraction = preferences.refraction / 100;
       distortion = preferences.distortion / 100;
+      dispersion = preferences.dispersion / 100;
+      edge = preferences.edge / 100;
       if (enabled) {
-        surface?.useWallpaper(mode);
+        if (surface) surface.useWallpaper(mode);
+        if (chrome) chrome.useWallpaper(mode);
         invalidate();
       } else {
         cancelAnimationFrame(frameId);
         frameId = undefined;
-        root.removeAttribute("data-glass-backdrop");
+        root.removeAttribute("data-glass-chrome");
         root.removeAttribute("data-glass-shader");
       }
     },

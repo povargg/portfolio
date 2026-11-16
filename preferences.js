@@ -21,9 +21,13 @@ const portfolioPreferences = (() => {
       mode: ["system", "light", "dark"].includes(values?.mode) ? values.mode : "light",
       language: languages.includes(values?.language) ? values.language : browserLanguage,
       glass: values?.glass !== false,
-      transparency: percent(values?.transparency, 100),
+      sectionIndicator: values?.sectionIndicator === true,
+      stickyNavigation: values?.stickyNavigation !== false,
+      transparency: percent(values?.transparency, 200),
       refraction: percent(values?.refraction, 200),
       distortion: percent(values?.distortion, 200),
+      dispersion: percent(values?.dispersion, 200),
+      edge: Number.isFinite(values?.edge) ? percent(values.edge, 100) : 30,
     };
   }
 
@@ -42,7 +46,11 @@ const portfolioPreferences = (() => {
     root.dataset.theme = values.glass ? "liquid-glass" : values.palette;
     root.dataset.mode = values.mode === "system" ? systemMode : values.mode;
     root.dataset.glass = values.glass ? "on" : "off";
-    root.style.setProperty("--glass-opacity", `${100 - values.transparency}%`);
+    root.dataset.sectionIndicator = values.sectionIndicator ? "on" : "off";
+    root.dataset.stickyNavigation = values.glass && values.stickyNavigation ? "on" : "off";
+    root.style.setProperty("--glass-opacity", Math.max(0, 100 - values.transparency) + "%");
+    root.style.setProperty("--glass-clarity", Math.max(0, values.transparency / 100 - 1));
+    root.style.setProperty("--glass-dispersion", values.dispersion / 100);
   }
 
   function notify() {

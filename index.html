@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="motion.css">
   <script defer src="translations.js"></script>
   <script defer src="motion.js"></script>
+  <script defer src="gallery.js"></script>
+  <script defer src="navigation.js"></script>
   <script defer src="portfolio.js"></script>
 </head>
 <body>
@@ -25,11 +27,31 @@
       <div class="intro-inner">
         <div class="intro-heading">
           <h2 id="intro-title" data-i18n="welcome">Willkommen</h2>
-          <p class="intro-name">Taras Shybaiev</p>
+          <div class="intro-heading-meta">
+            <div class="intro-options">
+              <label class="intro-language">
+                <span data-i18n="language">Sprache</span>
+                <select id="intro-language-select" name="language">
+                  <option value="de" lang="de">Deutsch</option>
+                  <option value="en" lang="en">English</option>
+                  <option value="ru" lang="ru">Русский</option>
+                </select>
+              </label>
+              <label class="glass-toggle">
+                <span>Liquid Glass</span>
+                <input id="intro-glass-toggle" type="checkbox" role="switch" name="glass">
+              </label>
+            </div>
+            <p class="intro-name">Taras Shybaiev</p>
+          </div>
         </div>
         <div class="intro-about"></div>
         <button class="intro-next" type="button" data-i18n="introScroll">Scrollen, um fortzufahren</button>
       </div>
+      <div class="intro-scenes"></div>
+      <button class="intro-step" type="button" hidden>
+        <span data-i18n="introAdvance">Weiter</span><span data-i18n="introFinish" hidden>Zum Portfolio</span>
+      </button>
     </div>
   </section>
 
@@ -51,9 +73,8 @@
         </ul>
       </nav>
       <div class="appearance">
-        <button class="header-control appearance-toggle" type="button" aria-expanded="false" aria-controls="appearance-panel">
+        <button class="header-control appearance-toggle" type="button" aria-expanded="false" aria-controls="appearance-panel" aria-label="Darstellung" data-i18n-label="appearance">
           <span class="material-symbol" aria-hidden="true">palette</span>
-          <span data-i18n="appearance">Darstellung</span>
         </button>
         <div id="appearance-panel" class="preferences-panel" inert aria-label="Darstellung" data-i18n-label="appearance" role="group">
           <div class="preference-field">
@@ -100,11 +121,19 @@
             <span>Liquid Glass</span>
             <input id="glass-toggle" type="checkbox" role="switch" name="glass">
           </label>
+          <label class="glass-toggle">
+            <span data-i18n="sectionIndicator">Aktiven Abschnitt hervorheben</span>
+            <input id="section-indicator" type="checkbox" role="switch" name="sectionIndicator">
+          </label>
+          <label class="glass-toggle sticky-nav-control" hidden>
+            <span data-i18n="stickyNavigation">Navigation beim Scrollen anheften</span>
+            <input id="sticky-navigation" type="checkbox" role="switch" name="stickyNavigation">
+          </label>
           <div class="glass-controls" hidden>
             <div class="preference-field">
               <label for="glass-transparency" data-i18n="glassTransparency">Transparenz</label>
               <output for="glass-transparency">100 %</output>
-              <input id="glass-transparency" name="transparency" type="range" min="0" max="100" value="100">
+              <input id="glass-transparency" name="transparency" type="range" min="0" max="200" value="100">
             </div>
             <div class="preference-field">
               <label for="glass-refraction" data-i18n="glassRefraction">Lichtbrechung</label>
@@ -116,7 +145,18 @@
               <output for="glass-distortion">100 %</output>
               <input id="glass-distortion" name="distortion" type="range" min="0" max="200" value="100">
             </div>
+            <div class="preference-field">
+              <label for="glass-dispersion" data-i18n="glassDispersion">Spektrale Zerlegung</label>
+              <output for="glass-dispersion">100 %</output>
+              <input id="glass-dispersion" name="dispersion" type="range" min="0" max="200" value="100">
+            </div>
+            <div class="preference-field">
+              <label for="glass-edge" data-i18n="glassEdge">Radius der Glaskante</label>
+              <output for="glass-edge">30 %</output>
+              <input id="glass-edge" name="edge" type="range" min="0" max="100" value="30">
+            </div>
           </div>
+          <button class="replay-intro" type="button" data-i18n="replayIntro">Begrüßung erneut abspielen</button>
         </div>
       </div>
     </div>
@@ -158,8 +198,8 @@
     <section id="projekte" class="page-section" aria-labelledby="projekte-titel">
       <div class="section-heading">
         <h2 id="projekte-titel" data-i18n="projects">Projekte</h2>
-        <a class="text-link" href="https://github.com/povargg?tab=repositories">
-          <span data-i18n="repositories">Alle Repositories</span> <span aria-hidden="true">↗</span>
+        <a class="text-link" href="https://github.com/povargg?tab=repositories" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="repositories">Alle Repositories</span>
         </a>
       </div>
 
@@ -172,23 +212,36 @@
             </div>
             <h3 id="windows-titel">UltimateDesktop<wbr>Effects</h3>
             <p data-i18n="windowsDescription">Schnee, Regen, fallende Blätter und Halloween für Windows 10 und 11. Schnee bleibt auf Fenstern liegen, Regen sammelt sich an der Taskleiste und im Halloween-Modus seilen sich Pixelspinnen ab. Jeder Effekt hat eigene Einstellungen und lässt sich über das Symbol im Infobereich auswählen.</p>
-            <p><span data-i18n="windowsCredit">Die Modi für Regen, Blätter und Halloween habe ich entwickelt und in einer App zusammengeführt. Die Grundlage für das Windows-Overlay und den Schnee war</span> <a href="https://github.com/flipkips/desktop-snow-overlay" data-i18n="layerSnow">LayerSnow von flipkips</a>.</p>
+            <p><span data-i18n="windowsCredit">Die Modi für Regen, Blätter und Halloween habe ich entwickelt und in einer App zusammengeführt. Die Grundlage für das Windows-Overlay und den Schnee war</span> <a href="https://github.com/flipkips/desktop-snow-overlay" target="_blank" rel="noopener noreferrer" data-i18n="layerSnow">LayerSnow von flipkips</a>.</p>
             <div class="action-row">
-              <a class="button button--dark" href="https://github.com/povargg/UltimateDesktopEffects/releases">
-                <span data-i18n="windowsDownload">Windows-Download</span> <span aria-hidden="true">↗</span>
-              </a>
-              <a class="button button--outline" href="https://github.com/povargg/UltimateDesktopEffects">
-                <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
+              <a class="button button--dark" href="https://github.com/povargg/UltimateDesktopEffects/releases/latest/download/UltimateDesktopEffects.exe" target="_blank" rel="noopener noreferrer">
+                <span data-i18n="windowsDownload">Windows-Download</span>
               </a>
             </div>
           </div>
-          <figure class="windows-art">
-            <a class="image-link" href="assets/ultimate-effects.png" target="_blank" rel="noopener" aria-label="Simulationsvorschau in voller Größe öffnen (neuer Tab)" data-i18n-label="simulationOpen">
-              <img src="assets/ultimate-effects.png" width="1280" height="800" loading="lazy" decoding="async"
-                   alt="Vier Simulationsszenen mit Schnee, Regen, bunten Blättern und Halloween-Figuren auf Fenstern" data-i18n-alt="simulationAlt">
-            </a>
-            <figcaption data-i18n="simulationCaption">Vorschau aus der Simulation</figcaption>
-          </figure>
+          <div class="windows-art effect-gallery">
+            <figure>
+              <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="Bildschirmfoto vergrößern" data-i18n-label="desktopPreviewOpen">
+                <img src="assets/desktop-snow.webp" width="2408" height="1008" loading="lazy" decoding="async" alt="Bildschirmfoto · Schnee">
+              </button>
+              <figcaption>
+                <span data-i18n="desktopPreview">Bildschirmfoto</span> · <span class="effect-caption" aria-live="polite">Schnee</span>
+              </figcaption>
+            </figure>
+            <div class="effect-controls">
+              <label class="visually-hidden" for="desktop-effect" data-i18n="desktopEffect">Effekt für die Vorschau</label>
+              <div class="effect-range">
+                <span class="effect-slider-track" aria-hidden="true"></span>
+                <input id="desktop-effect" type="range" min="0" max="3" value="0" aria-valuetext="Schnee">
+              </div>
+              <div class="effect-options" role="group" aria-label="Effekt für die Vorschau" data-i18n-label="desktopEffect">
+                <button type="button" data-effect="snow" aria-pressed="true" data-i18n="effectSnow">Schnee</button>
+                <button type="button" data-effect="rain" aria-pressed="false" data-i18n="effectRain">Regen</button>
+                <button type="button" data-effect="leaves" aria-pressed="false" data-i18n="effectLeaves">Blätter</button>
+                <button type="button" data-effect="halloween" aria-pressed="false" data-i18n="effectHalloween">Halloween</button>
+              </div>
+            </div>
+          </div>
         </article>
 
         <article id="linux-dotfiles" class="feature feature--linux" aria-labelledby="linux-titel">
@@ -197,13 +250,11 @@
               <p class="eyebrow">Linux · Lua · RON</p>
               <h3 id="linux-titel" data-i18n="dotfilesTitle">Linux-Dotfiles</h3>
               <p data-i18n="dotfilesDescription">Meine Konfigurationen für Neovim, den Musikplayer rmpc und das Terminal. Im Repository stehen auch die Einstellungen für Kitty, fish und Starship auf Basis der Dotfiles von end-4 sowie eigene Abschnitte für MPD und CAVA.</p>
+              <p data-i18n="dotfilesGuide">Die Konfigurationen und die Anleitung findest du auf meinem GitHub-Profil, das unten auf der Seite verlinkt ist.</p>
             </div>
             <div class="action-row">
-              <a class="button button--dark" href="https://github.com/povargg/dotfiles">
-                <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
-              </a>
-              <a class="button button--outline" href="https://github.com/povargg/dotfiles/blob/main/docs/README.de.md" data-i18n-href="dotfilesGuideUrl">
-                <span data-i18n="guide">Anleitung</span> <span aria-hidden="true">↗</span>
+              <a class="button button--dark" href="https://github.com/povargg/dotfiles" target="_blank" rel="noopener noreferrer">
+                <span data-i18n="source">Quellcode</span>
               </a>
             </div>
           </div>
@@ -211,10 +262,10 @@
           <div class="dotfiles-grid">
             <section class="dotfile" aria-labelledby="povvim-titel">
               <figure>
-                <a class="image-link" href="assets/povvim.webp" target="_blank" rel="noopener" aria-label="POVVIM-Screenshot in voller Größe öffnen (neuer Tab)" data-i18n-label="povvimOpen">
+                <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="POVVIM-Screenshot vergrößern" data-i18n-label="povvimOpen">
                   <img src="assets/povvim.webp" width="2048" height="856" loading="lazy" decoding="async"
                        alt="Neovim mit POVVIM-Startbildschirm und dem Farbschema Aardvark Ink" data-i18n-alt="povvimAlt">
-                </a>
+                </button>
               </figure>
               <div class="dotfile-copy">
                 <h4 id="povvim-titel">POVVIM</h4>
@@ -223,10 +274,10 @@
             </section>
             <section class="dotfile" aria-labelledby="rmpc-titel">
               <figure>
-                <a class="image-link" href="assets/rmpc.webp" target="_blank" rel="noopener" aria-label="rmpc-Screenshot in voller Größe öffnen (neuer Tab)" data-i18n-label="rmpcOpen">
+                <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="rmpc-Screenshot vergrößern" data-i18n-label="rmpcOpen">
                   <img src="assets/rmpc.webp" width="2048" height="856" loading="lazy" decoding="async"
                        alt="rmpc mit Warteschlange, Albumcover und rosa Fortschrittsleiste" data-i18n-alt="rmpcAlt">
-                </a>
+                </button>
               </figure>
               <div class="dotfile-copy">
                 <h4 id="rmpc-titel">rmpc</h4>
@@ -254,20 +305,23 @@
             <h3 id="web-titel" data-i18n="portfolioTitle">Portfolio-Webseite</h3>
             <p data-i18n="portfolioDescription">Für meine Bewerbung habe ich diese Seite als eigenes Webprojekt aufgebaut. Den Quellcode findest du auf GitHub.</p>
           </div>
-          <a class="button button--outline" href="https://github.com/povargg/portfolio">
-            <span data-i18n="source">Quellcode</span> <span aria-hidden="true">↗</span>
+          <a class="button button--outline" href="https://github.com/povargg/portfolio" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="source">Quellcode</span>
           </a>
         </article>
       </div>
     </section>
 
-    <section id="skills" class="page-section" aria-labelledby="skills-titel">
+    <section id="skills" class="page-section skills-panel" aria-labelledby="skills-titel">
       <div class="section-heading">
         <h2 id="skills-titel" data-i18n="skills">Skills</h2>
-        <p class="skill-hint" aria-hidden="true" data-i18n="skillHint">Klicke, um die Karte umzudrehen</p>
+        <p class="skill-details-hint" aria-hidden="true">
+          <span class="skill-click-hint" data-i18n="skillDetailsHint">Klicke auf eine Karte für Details.</span>
+          <span class="skill-touch-hint" data-i18n="skillTouchHint">Tippe auf eine Karte für Details.</span>
+        </p>
       </div>
       <div class="skills-grid">
-        <article class="skill-card" aria-labelledby="skill-software">
+        <article class="skill-card" data-skill="software" aria-labelledby="skill-software">
           <div class="skill-shell">
             <div class="skill-turn">
               <div class="skill-face skill-front">
@@ -277,15 +331,14 @@
                   <p><span data-i18n="skillSoftwareText">C++17, Win32 und DirectX am Beispiel von</span> <a href="#ultimate-desktop-effects">UltimateDesktopEffects</a>.</p>
                 </div>
               </div>
-              <div class="skill-face skill-back" aria-hidden="true" inert>
-                <span class="material-symbol skill-emblem" aria-hidden="true">code</span>
-                <p data-i18n="skillSoftware">Softwareentwicklung</p>
+              <div class="skill-face skill-back" aria-hidden="true">
+                <div class="skill-reflection" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Softwareentwicklung drehen" data-i18n-label="flipSoftware"></button>
+          <button class="skill-enlarge visually-hidden" type="button" aria-haspopup="dialog" aria-describedby="skill-software" data-i18n="openSkill">Details anzeigen</button>
         </article>
-        <article class="skill-card" aria-labelledby="skill-linux">
+        <article class="skill-card" data-skill="linux" aria-labelledby="skill-linux">
           <div class="skill-shell">
             <div class="skill-turn">
               <div class="skill-face skill-front">
@@ -295,15 +348,14 @@
                   <p><span data-i18n="skillLinuxText">Neovim, Shell und Desktop-Konfiguration. Beispiele stehen in den</span> <a href="#linux-dotfiles" data-i18n="dotfilesLink">Linux-Dotfiles</a>.</p>
                 </div>
               </div>
-              <div class="skill-face skill-back" aria-hidden="true" inert>
-                <span class="material-symbol skill-emblem" aria-hidden="true">terminal</span>
-                <p>Linux</p>
+              <div class="skill-face skill-back" aria-hidden="true">
+                <div class="skill-reflection" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Linux drehen" data-i18n-label="flipLinux"></button>
+          <button class="skill-enlarge visually-hidden" type="button" aria-haspopup="dialog" aria-describedby="skill-linux" data-i18n="openSkill">Details anzeigen</button>
         </article>
-        <article class="skill-card" aria-labelledby="skill-web">
+        <article class="skill-card" data-skill="web" aria-labelledby="skill-web">
           <div class="skill-shell">
             <div class="skill-turn">
               <div class="skill-face skill-front">
@@ -313,31 +365,29 @@
                   <p><span data-i18n="skillWebText">HTML, CSS und responsive Layouts für dieses</span> <a href="#portfolio-webseite" data-i18n="portfolioLink">Portfolio</a>.</p>
                 </div>
               </div>
-              <div class="skill-face skill-back" aria-hidden="true" inert>
-                <span class="material-symbol skill-emblem" aria-hidden="true">web</span>
-                <p data-i18n="skillWeb">Webentwicklung</p>
+              <div class="skill-face skill-back" aria-hidden="true">
+                <div class="skill-reflection" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Webentwicklung drehen" data-i18n-label="flipWeb"></button>
+          <button class="skill-enlarge visually-hidden" type="button" aria-haspopup="dialog" aria-describedby="skill-web" data-i18n="openSkill">Details anzeigen</button>
         </article>
-        <article class="skill-card" aria-labelledby="skill-git">
+        <article class="skill-card" data-skill="git" aria-labelledby="skill-git">
           <div class="skill-shell">
             <div class="skill-turn">
               <div class="skill-face skill-front">
                 <div class="skill-reflection" aria-hidden="true"></div>
                 <div class="skill-content">
                   <h3 id="skill-git" data-i18n="skillGit">Versionsverwaltung</h3>
-                  <p><span data-i18n="skillGitText">Versionsverwaltung mit Git und Projektdokumentation auf</span> <a href="https://github.com/povargg">GitHub</a>.</p>
+                  <p><span data-i18n="skillGitText">Versionsverwaltung mit Git und Projektdokumentation auf</span> <a href="https://github.com/povargg" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
                 </div>
               </div>
-              <div class="skill-face skill-back" aria-hidden="true" inert>
-                <span class="material-symbol skill-emblem" aria-hidden="true">account_tree</span>
-                <p data-i18n="skillGit">Versionsverwaltung</p>
+              <div class="skill-face skill-back" aria-hidden="true">
+                <div class="skill-reflection" aria-hidden="true"></div>
               </div>
             </div>
           </div>
-          <button class="skill-flip visually-hidden" type="button" aria-pressed="false" aria-label="Karte Versionsverwaltung drehen" data-i18n-label="flipGit"></button>
+          <button class="skill-enlarge visually-hidden" type="button" aria-haspopup="dialog" aria-describedby="skill-git" data-i18n="openSkill">Details anzeigen</button>
         </article>
       </div>
     </section>
@@ -385,7 +435,7 @@
           </button>
         </span>
         <span class="social-item">
-          <a class="social-icon" href="https://github.com/povargg" aria-label="GitHub-Profil" data-i18n-label="githubProfile">
+          <a class="social-icon" href="https://github.com/povargg" target="_blank" rel="noopener noreferrer" aria-label="GitHub-Profil" data-i18n-label="githubProfile">
             <img src="assets/github.png" width="64" height="64" alt="">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </a>
@@ -394,5 +444,71 @@
     </div>
   </footer>
   </div>
+  <dialog class="skill-dialog" aria-labelledby="skill-dialog-title">
+    <div class="skill-flight">
+    <div class="skill-expanded">
+      <div class="skill-expanded-face">
+        <div class="skill-reflection" aria-hidden="true"></div>
+        <div class="skill-detail-layout">
+          <header class="skill-detail-identity">
+            <span class="material-symbol skill-emblem" aria-hidden="true"></span>
+            <h2 id="skill-dialog-title"></h2>
+          </header>
+          <div class="skill-detail-notes">
+            <section data-skill-details="software" data-emblem="code" hidden>
+              <p class="eyebrow">C++17 · Win32 · DirectX</p>
+              <p data-i18n="softwareDetails">Für UltimateDesktopEffects habe ich mehrere Effekte für den Windows-Desktop entwickelt und in einer App gebündelt. Dabei habe ich gelernt, wie Grafik, Fensterverwaltung und eine Bedienung über den Infobereich zusammenkommen.</p>
+              <ul>
+                <li data-i18n="softwareDetailOne">Regen, Laub und Halloween als eigenständige Effekte mit jeweils eigenen Einstellungen.</li>
+                <li data-i18n="softwareDetailTwo">Win32 für das Overlay und die Bedienung. DirectX für das Zeichnen der Effekte.</li>
+              </ul>
+              <a class="button button--outline" href="#ultimate-desktop-effects">UltimateDesktopEffects</a>
+            </section>
+            <section data-skill-details="linux" data-emblem="terminal" hidden>
+              <p class="eyebrow">Neovim · fish · Kitty · rmpc</p>
+              <p data-i18n="linuxDetails">Unter Linux passe ich meinen Arbeitsplatz so an, dass Editor, Terminal und Desktop gut zusammenspielen. Die Einstellungen sammle ich als Dotfiles, damit ich sie auf einem anderen Rechner wiederverwenden kann.</p>
+              <ul>
+                <li data-i18n="linuxDetailOne">POVVIM bündelt meine Werkzeuge für Code, Git und Build-Aufgaben in Neovim.</li>
+                <li data-i18n="linuxDetailTwo">Für rmpc habe ich ein Gruvbox-Farbschema, eigene Symbole und japanische Reiterbeschriftungen eingerichtet.</li>
+              </ul>
+              <a class="button button--outline" href="#linux-dotfiles" data-i18n="dotfilesTitle">Linux-Dotfiles</a>
+            </section>
+            <section data-skill-details="web" data-emblem="web" hidden>
+              <p class="eyebrow">HTML · CSS · JavaScript · Three.js</p>
+              <p data-i18n="webDetails">Dieses Portfolio ist mein praktisches Webprojekt. Ich baue und teste responsive Ansichten, dreisprachige Inhalte und Interaktionen für Maus, Tastatur und Touch.</p>
+              <ul>
+                <li data-i18n="webDetailOne">Das Layout und die Bedienelemente entstehen mit HTML und CSS. JavaScript verwaltet Einstellungen, Sprache und interaktive Ansichten.</li>
+                <li data-i18n="webDetailTwo">Mit Three.js programmiere ich Shader für Glas, Reflexionen und animierte Oberflächen.</li>
+              </ul>
+              <a class="button button--outline" href="#portfolio-webseite" data-i18n="portfolioTitle">Portfolio-Webseite</a>
+            </section>
+            <section data-skill-details="git" data-emblem="account_tree" hidden>
+              <p class="eyebrow">Git · GitHub · Neogit</p>
+              <p data-i18n="gitDetails">Ich nutze Git, um Änderungen an Apps, Konfigurationen und dieser Website nachvollziehbar zu machen. Auf GitHub halte ich den Quellcode und Anleitungen zu meinen Projekten fest.</p>
+              <ul>
+                <li data-i18n="gitDetailOne">In Neovim prüfe ich Änderungen mit Neogit und CodeDiff, bevor ich sie übernehme.</li>
+                <li data-i18n="gitDetailTwo">In den Repositories dokumentiere ich Einrichtung und Bedienung und stelle bei Bedarf Downloads bereit.</li>
+              </ul>
+              <a class="button button--outline" href="https://github.com/povargg?tab=repositories" target="_blank" rel="noopener noreferrer" data-i18n="repositories">Alle Repositories</a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <button class="header-control skill-close" type="button" aria-label="Details schließen" data-i18n-label="closeSkill" autofocus>
+        <span class="material-symbol" aria-hidden="true">close</span>
+      </button>
+    </div>
+    <div class="skill-flight-source" aria-hidden="true" inert></div>
+    </div>
+  </dialog>
+
+  <dialog class="image-dialog" aria-labelledby="image-dialog-caption">
+    <figure class="image-view">
+      <button class="header-control image-close" type="button" aria-label="Bild schließen" data-i18n-label="closePreview" autofocus>
+        <span class="material-symbol" aria-hidden="true">close</span>
+      </button>
+      <figcaption id="image-dialog-caption"></figcaption>
+    </figure>
+  </dialog>
 </body>
 </html>
