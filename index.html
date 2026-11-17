@@ -133,7 +133,7 @@
             <div class="preference-field">
               <label for="glass-transparency" data-i18n="glassTransparency">Transparenz</label>
               <output for="glass-transparency">100 %</output>
-              <input id="glass-transparency" name="transparency" type="range" min="0" max="200" value="100">
+              <input id="glass-transparency" name="transparency" type="range" min="0" max="100" value="100">
             </div>
             <div class="preference-field">
               <label for="glass-refraction" data-i18n="glassRefraction">Lichtbrechung</label>
@@ -397,6 +397,37 @@
         <h2 id="erfahrung-titel" data-i18n="experience">Erfahrung</h2>
         <h3 data-i18n="internship">Webentwicklungspraktikum</h3>
         <p data-i18n="experienceDescription">Im Praktikum habe ich erste Einblicke in die Webentwicklung bekommen. In eigenen Projekten vertiefe ich auch Themen rund um Linux, Windows und PC-Hardware.</p>
+        <div class="experience-projects">
+          <article class="experience-project" aria-labelledby="wolke7-titel">
+            <button class="image-preview experience-preview" type="button" aria-haspopup="dialog" aria-label="Vorschau von Wolke 7 vergrößern" data-i18n-label="wolke7PreviewOpen">
+              <img src="assets/wolke7-schwedt-preview.webp" width="1280" height="768" loading="lazy" decoding="async" alt="Startseite des Kosmetikstudios Wolke 7" data-i18n-alt="wolke7PreviewAlt">
+              <span class="experience-enlarge" aria-hidden="true">+</span>
+            </button>
+            <div class="experience-project-copy">
+              <h3 id="wolke7-titel">Wolke 7</h3>
+              <time datetime="2023-10" data-i18n="wolke7Date">Oktober 2023</time>
+              <p data-i18n="wolke7Description">Website für ein Kosmetikstudio in Schwedt/Oder.</p>
+              <a class="text-link experience-site-link" href="https://www.wolke7-schwedt.de/" target="_blank" rel="noopener noreferrer" data-i18n="visitWolke7">Wolke 7 besuchen</a>
+            </div>
+          </article>
+          <article class="experience-project" aria-labelledby="hoeck-titel">
+            <button class="image-preview experience-preview" type="button" aria-haspopup="dialog" aria-label="Vorschau der Hoeck-Stiftung vergrößern" data-i18n-label="hoeckPreviewOpen">
+              <img src="assets/hoeck-stiftung-preview.webp" width="1280" height="768" loading="lazy" decoding="async" alt="Startseite der Hoeck-Stiftung" data-i18n-alt="hoeckPreviewAlt">
+              <span class="experience-enlarge" aria-hidden="true">+</span>
+            </button>
+            <div class="experience-project-copy">
+              <h3 id="hoeck-titel">Hoeck-Stiftung</h3>
+              <p data-i18n="hoeckDescription">Mitarbeit an der Website einer Stiftung, die Hospizarbeit in Barnim und der Uckermark unterstützt.</p>
+              <a class="text-link experience-site-link" href="https://www.hoeck-stiftung.de/" target="_blank" rel="noopener noreferrer" data-i18n="visitHoeck">Hoeck-Stiftung besuchen</a>
+            </div>
+          </article>
+        </div>
+        <article class="experience-project experience-project--archived" aria-labelledby="sohetec-titel">
+          <div class="experience-project-copy">
+            <h3 id="sohetec-titel">Sohetec</h3>
+            <p data-i18n="sohetecDescription">Ich habe an einer früheren Version der Website mitgearbeitet, die inzwischen ersetzt wurde.</p>
+          </div>
+        </article>
       </section>
       <section id="bildung" class="background-panel background-panel--education" aria-labelledby="bildung-titel">
         <h2 id="bildung-titel" data-i18n="education">Bildung</h2>

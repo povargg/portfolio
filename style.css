@@ -1045,6 +1045,8 @@ figcaption {
 
 .background-grid {
   margin: 2rem auto;
+  grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  align-items: start;
 }
 
 .background-panel {
@@ -1065,6 +1067,79 @@ figcaption {
   font-size: clamp(1.05rem, 2vw, 1.2rem);
   line-height: 1.35;
   overflow-wrap: anywhere;
+}
+
+.experience-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.experience-project {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.95rem;
+  background: var(--surface-raised);
+}
+
+.experience-preview {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0.9rem 0.9rem 0 0;
+}
+
+.experience-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experience-enlarge {
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.55rem;
+  display: grid;
+  place-items: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.experience-project-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 1rem;
+}
+
+.experience-project-copy p {
+  margin-top: 0;
+}
+
+.experience-project-copy time {
+  color: var(--muted);
+  font: 400 0.85rem / 1.4 var(--mono);
+}
+
+.experience-site-link {
+  margin-top: auto;
+  padding-top: 0.2rem;
+}
+
+.experience-project--archived {
+  grid-template-rows: auto;
+  margin-top: 1rem;
 }
 
 .site-footer {

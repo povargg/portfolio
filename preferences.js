@@ -41,15 +41,29 @@ const portfolioPreferences = (() => {
 
   let values = restore();
 
+  function read() {
+    const colorMode = values.mode === "system"
+      ? (systemDark.matches ? "dark" : "light")
+      : values.mode;
+    const transparencyMax = colorMode === "dark" ? 200 : 100;
+
+    return {
+      ...values,
+      colorMode,
+      transparencyMax,
+      transparency: Math.min(values.transparency, transparencyMax),
+    };
+  }
+
   function apply() {
-    const systemMode = systemDark.matches ? "dark" : "light";
+    const { colorMode, transparency } = read();
     root.dataset.theme = values.glass ? "liquid-glass" : values.palette;
-    root.dataset.mode = values.mode === "system" ? systemMode : values.mode;
+    root.dataset.mode = colorMode;
     root.dataset.glass = values.glass ? "on" : "off";
     root.dataset.sectionIndicator = values.sectionIndicator ? "on" : "off";
     root.dataset.stickyNavigation = values.glass && values.stickyNavigation ? "on" : "off";
-    root.style.setProperty("--glass-opacity", Math.max(0, 100 - values.transparency) + "%");
-    root.style.setProperty("--glass-clarity", Math.max(0, values.transparency / 100 - 1));
+    root.style.setProperty("--glass-opacity", Math.max(0, 100 - transparency) + "%");
+    root.style.setProperty("--glass-clarity", Math.max(0, transparency / 100 - 1));
     root.style.setProperty("--glass-dispersion", values.dispersion / 100);
   }
 
@@ -70,9 +84,7 @@ const portfolioPreferences = (() => {
   });
 
   return {
-    read() {
-      return { ...values };
-    },
+    read,
     update(changes) {
       values = normalize({ ...values, ...changes });
       try {

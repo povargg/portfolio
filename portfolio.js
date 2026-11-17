@@ -15,6 +15,7 @@
   const stickyNavControl = document.querySelector(".sticky-nav-control");
   const replayIntro = document.querySelector(".replay-intro");
   const glassControls = document.querySelector(".glass-controls");
+  const transparencyInput = document.querySelector("#glass-transparency");
   const glassRanges = [...glassControls.querySelectorAll('input[type="range"]')].map((input) => ({
     input,
     output: input.parentElement.querySelector("output"),
@@ -37,7 +38,7 @@
 
   function updateGlass() {
     const preferences = portfolioPreferences.read();
-    liquidGlass?.update(preferences, root.dataset.mode);
+    liquidGlass?.update(preferences, preferences.colorMode);
     if (!preferences.glass || liquidGlassModule || location.protocol === "file:") return;
 
     liquidGlassModule = import("./liquid-glass.js")
@@ -96,6 +97,7 @@
     for (const input of switches) input.checked = preferences[input.name];
     stickyNavControl.hidden = !glass;
     glassControls.hidden = !glass;
+    transparencyInput.max = preferences.transparencyMax;
     const formatPercent = new Intl.NumberFormat(language, { style: "percent" });
     for (const { input, output } of glassRanges) {
       const value = preferences[input.name];
