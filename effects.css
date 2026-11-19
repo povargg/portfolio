@@ -1,5 +1,9 @@
 :root {
-  scrollbar-gutter: stable;
+  scrollbar-width: none;
+}
+
+:root::-webkit-scrollbar {
+  display: none;
 }
 
 .skill-card {
