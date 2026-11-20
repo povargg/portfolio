@@ -1,4 +1,4 @@
-import { createGlassSurface } from "./glass-surface.js";
+import { createGlassSurface, createWallpaperTexture } from "./glass-surface.js";
 import { glassScrollSpeed } from "./glass-motion.js";
 
 export function createLiquidGlass() {
@@ -38,6 +38,8 @@ export function createLiquidGlass() {
   let targetY = 0;
   let lastTile;
   let lastOffset;
+  let wallpaperImage;
+  let texture;
 
   function invalidate(duration = 0) {
     if (!enabled || document.hidden) return;
@@ -47,9 +49,7 @@ export function createLiquidGlass() {
 
   function initializeSurface(host) {
     try {
-      const renderer = createGlassSurface(() => invalidate(), host);
-      renderer?.useWallpaper(mode);
-      return renderer || false;
+      return createGlassSurface(() => invalidate(), host) || false;
     } catch {
       // The native backdrop and CSS remain available if WebGL cannot initialize.
       return false;
@@ -75,12 +75,19 @@ export function createLiquidGlass() {
     const tint = style.getPropertyValue("--surface").trim();
     const tileSize = Math.round(Math.max(45 * rem, Math.min(96 * rem, Math.max(width, height) * 1.1)));
     const scrollOffset = reducedMotion.matches ? 0 : -Math.max(0, y) * .19;
+    const nextWallpaper = portfolioMedia.wallpaperImage();
+    if (nextWallpaper !== wallpaperImage) {
+      texture?.dispose();
+      wallpaperImage = nextWallpaper;
+      texture = wallpaperImage ? createWallpaperTexture(wallpaperImage) : undefined;
+    }
 
     const introActive = root.classList.contains("intro-active");
     const showPanels = !introActive || !stage.closest(".is-compact") && welcomePanels.some(({ element }) => !element.hidden);
     const showHeader = !introActive && (header.getBoundingClientRect().bottom > 0 || !menuLens.element.inert);
     const frame = {
       width, height, scrollY: y, tileSize, scrollOffset, tint, transparency, refraction, distortion, dispersion, edge,
+      texture,
       light: mode === "light",
       pointerX: reducedMotion.matches ? 0 : pointerX,
       pointerY: reducedMotion.matches ? 0 : pointerY,
@@ -132,6 +139,7 @@ export function createLiquidGlass() {
   window.addEventListener("hashchange", () => invalidate());
   document.addEventListener("portfolio:section", () => invalidate());
   document.addEventListener("portfolio:intro", () => invalidate(650));
+  document.addEventListener("portfolio:wallpaper", () => invalidate());
   document.addEventListener("portfolio:intro-content", () => { welcomePanels = getWelcomePanels(); invalidate(); });
   document.addEventListener("portfolio:scene", () => invalidate());
   header.addEventListener("transitionrun", (event) => {
@@ -159,10 +167,10 @@ export function createLiquidGlass() {
       dispersion = preferences.dispersion / 100;
       edge = preferences.edge / 100;
       if (enabled) {
-        if (surface) surface.useWallpaper(mode);
-        if (chrome) chrome.useWallpaper(mode);
         invalidate();
       } else {
+        texture?.dispose();
+        texture = wallpaperImage = undefined;
         cancelAnimationFrame(frameId);
         frameId = undefined;
         root.removeAttribute("data-glass-chrome");

@@ -1,6 +1,6 @@
 import {
   Color, Mesh, OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, SRGBColorSpace,
-  TextureLoader, WebGLRenderer,
+  Texture, WebGLRenderer,
 } from "./vendor/three.module.min.js";
 
 export function mountPortraitRolls() {
@@ -97,7 +97,6 @@ export function mountPortraitRolls() {
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const finePointer = matchMedia("(hover: hover) and (pointer: fine) and (width > 40rem)");
   const entries = [];
-  let photo;
   let frame;
   let lost = false;
   let bufferSize = "";
@@ -137,10 +136,6 @@ export function mountPortraitRolls() {
       detail.classList.toggle("roll-closed", entry.opening < .13);
       moving ||= elapsed < 1;
 
-      if (open && !photo) {
-        detail.classList.remove("has-portrait-roll");
-        continue;
-      }
       const resolution = Math.min(window.devicePixelRatio || 1, 1.5);
       const w = Math.max(1, Math.round(width * resolution));
       const h = Math.max(1, Math.round(height * resolution));
@@ -201,13 +196,19 @@ export function mountPortraitRolls() {
     lost = false;
     queue();
   });
-  new TextureLoader().loadAsync(new URL("./assets/taras-portrait.jpg", import.meta.url).href).then((texture) => {
+  function setPhoto() {
+    const image = portfolioMedia.portraitImage();
+    if (!image) return;
+    uniforms.photo.value?.dispose();
+    const texture = new Texture(image);
     texture.colorSpace = SRGBColorSpace;
-    photo = texture;
-    uniforms.photo.value = photo;
+    texture.needsUpdate = true;
+    uniforms.photo.value = texture;
     uniforms.photoReady.value = 1;
     queue();
-  }).catch(() => {});
+  }
+  setPhoto();
+  document.addEventListener("portfolio:portrait", setPhoto);
 
   reducedMotion.addEventListener("change", queue);
   finePointer.addEventListener("change", queue);

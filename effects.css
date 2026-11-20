@@ -263,9 +263,7 @@
 
 .skill-expanded-face {
   position: relative;
-  max-height: 88svh;
-  overflow: auto;
-  overscroll-behavior: contain;
+  overflow: clip;
   border: 1px solid color-mix(in srgb, var(--card-accent) 58%, var(--line));
   border-radius: clamp(1.2rem, 3vw, 2.2rem);
   background:
@@ -290,6 +288,9 @@
   align-items: center;
   gap: clamp(1.5rem, 5vw, 4.6rem);
   min-height: min(77svh, 39rem);
+  max-height: 88svh;
+  overflow: auto;
+  overscroll-behavior: contain;
   padding: clamp(2.4rem, 6vw, 5.5rem);
 }
 
@@ -333,6 +334,7 @@
   position: absolute;
   top: .8rem;
   right: .8rem;
+  z-index: 2;
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -495,7 +497,7 @@
   height: 100%;
   pointer-events: none;
   z-index: -2;
-  background: var(--glass-base) var(--glass-wallpaper) repeat 50% var(--glass-offset) / var(--glass-tile);
+  background: var(--glass-base) var(--glass-wallpaper, none) repeat 50% var(--glass-offset) / var(--glass-tile);
 }
 
 [data-glass="on"][data-glass-shader] .glass-layer {

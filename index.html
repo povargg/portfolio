@@ -6,13 +6,13 @@
   <meta name="description" data-i18n-content="metadata" content="Taras Shybaievs Portfolio für ein duales Studium in der IT. Mit Linux-Dotfiles, UltimateDesktopEffects und Einblicken in seine Webentwicklung.">
   <meta name="theme-color" content="#faf4e9">
   <title data-i18n="documentTitle">Taras Shybaiev | Portfolio</title>
-  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png">
   <script src="preferences.js"></script>
   <link rel="stylesheet" href="themes.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="effects.css">
   <link rel="stylesheet" href="motion.css">
-  <script defer src="translations.js"></script>
+  <script defer src="media.js"></script>
   <script defer src="motion.js"></script>
   <script defer src="gallery.js"></script>
   <script defer src="navigation.js"></script>
@@ -169,7 +169,7 @@
       <div class="about-row">
         <details class="portrait-reveal">
           <summary aria-label="Porträt von Taras Shybaiev ein- oder ausblenden" data-i18n-label="portrait">
-            <img src="assets/taras-portrait.jpg" width="1086" height="1448" alt="Porträt von Taras Shybaiev" data-i18n-alt="portraitAlt">
+            <img width="1086" height="1448" alt="Porträt von Taras Shybaiev" data-i18n-alt="portraitAlt">
           </summary>
         </details>
         <div class="about-copy">
@@ -189,6 +189,7 @@
       </div>
       <div class="project-shortcuts" role="group" aria-label="Projektübersicht" data-i18n-label="projectShortcuts">
         <a href="#ultimate-desktop-effects">Desktop Effects</a>
+        <a href="#windock">WinDock</a>
         <a href="#linux-dotfiles" data-i18n="dotfilesShortcut">Dotfiles</a>
         <a href="#portfolio-webseite" data-i18n="websites">Webseiten</a>
         <button type="button" disabled title="Details folgen" data-i18n-title="detailsPending">Ryoku Arch</button>
@@ -207,7 +208,7 @@
         <article id="ultimate-desktop-effects" class="feature feature--windows" aria-labelledby="windows-titel">
           <div class="windows-copy">
             <div class="project-meta">
-              <img class="app-icon" src="assets/ue-logo.png" width="256" height="256" alt="" loading="lazy">
+              <img class="app-icon" src="assets/icons/ue-logo.png" width="64" height="64" alt="" loading="lazy" decoding="async">
               <p class="eyebrow">Windows · C++17 · DirectX</p>
             </div>
             <h3 id="windows-titel">UltimateDesktop<wbr>Effects</h3>
@@ -222,7 +223,8 @@
           <div class="windows-art effect-gallery">
             <figure>
               <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="Bildschirmfoto vergrößern" data-i18n-label="desktopPreviewOpen">
-                <img src="assets/desktop-snow.webp" width="2408" height="1008" loading="lazy" decoding="async" alt="Bildschirmfoto · Schnee">
+                <img data-image="desktop-snow.webp" width="2408" height="1008" decoding="async" alt="Bildschirmfoto · Schnee">
+                <noscript><img src="assets/compact/desktop-snow.webp" width="1320" height="553" loading="lazy" alt="Bildschirmfoto · Schnee"></noscript>
               </button>
               <figcaption>
                 <span data-i18n="desktopPreview">Bildschirmfoto</span> · <span class="effect-caption" aria-live="polite">Schnee</span>
@@ -244,6 +246,19 @@
           </div>
         </article>
 
+        <article id="windock" class="feature web-project" aria-labelledby="windock-titel">
+          <div>
+            <div class="project-meta">
+              <img class="app-icon app-icon--smooth" src="assets/icons/windock.webp" width="144" height="144" alt="" loading="lazy" decoding="async">
+              <p class="eyebrow">Windows 11 · Rust · Win32</p>
+            </div>
+            <h3 id="windock-titel">WinDock</h3>
+            <p data-i18n="windockDescription">Ein anpassbares Dock und ein Tastatur-Launcher für Windows 11. Mit Alt + Leertaste kann ich Apps, Dateien und offene Fenster finden. Ich habe das Dock um Farbpaletten und konfigurierbares Liquid Glass erweitert.</p>
+            <p><span data-i18n="windockCredit">Für mein eigenes Windows-Setup habe ich</span> <a href="https://github.com/SumirSeth/wisp" target="_blank" rel="noopener noreferrer" data-i18n="windockUpstream">Wisp von Sumir Seth</a> <span data-i18n="windockCreditEnd">als Fork weiterentwickelt.</span></p>
+          </div>
+          <a class="button button--dark" href="https://github.com/povargg/WinDock/releases/latest/download/windock-x64.exe" target="_blank" rel="noopener noreferrer" data-i18n="windowsDownload">Windows-Download</a>
+        </article>
+
         <article id="linux-dotfiles" class="feature feature--linux" aria-labelledby="linux-titel">
           <div class="feature-head">
             <div class="feature-copy">
@@ -263,8 +278,9 @@
             <section class="dotfile" aria-labelledby="povvim-titel">
               <figure>
                 <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="POVVIM-Screenshot vergrößern" data-i18n-label="povvimOpen">
-                  <img src="assets/povvim.webp" width="2048" height="856" loading="lazy" decoding="async"
+                  <img data-image="povvim.webp" width="2048" height="856" decoding="async"
                        alt="Neovim mit POVVIM-Startbildschirm und dem Farbschema Aardvark Ink" data-i18n-alt="povvimAlt">
+                  <noscript><img src="assets/compact/povvim.webp" width="1220" height="510" loading="lazy" alt="Neovim mit POVVIM-Startbildschirm"></noscript>
                 </button>
               </figure>
               <div class="dotfile-copy">
@@ -275,8 +291,9 @@
             <section class="dotfile" aria-labelledby="rmpc-titel">
               <figure>
                 <button class="image-preview" type="button" aria-haspopup="dialog" aria-label="rmpc-Screenshot vergrößern" data-i18n-label="rmpcOpen">
-                  <img src="assets/rmpc.webp" width="2048" height="856" loading="lazy" decoding="async"
+                  <img data-image="rmpc.webp" width="2048" height="856" decoding="async"
                        alt="rmpc mit Warteschlange, Albumcover und rosa Fortschrittsleiste" data-i18n-alt="rmpcAlt">
+                  <noscript><img src="assets/compact/rmpc.webp" width="1220" height="510" loading="lazy" alt="rmpc mit Warteschlange und Albumcover"></noscript>
                 </button>
               </figure>
               <div class="dotfile-copy">
@@ -400,8 +417,8 @@
         <div class="experience-projects">
           <article class="experience-project" aria-labelledby="wolke7-titel">
             <button class="image-preview experience-preview" type="button" aria-haspopup="dialog" aria-label="Vorschau von Wolke 7 vergrößern" data-i18n-label="wolke7PreviewOpen">
-              <img src="assets/wolke7-schwedt-preview.webp" width="1280" height="768" loading="lazy" decoding="async" alt="Startseite des Kosmetikstudios Wolke 7" data-i18n-alt="wolke7PreviewAlt">
-              <span class="experience-enlarge" aria-hidden="true">+</span>
+              <img data-image="wolke7-schwedt-preview.webp" width="1280" height="768" decoding="async" alt="Startseite des Kosmetikstudios Wolke 7" data-i18n-alt="wolke7PreviewAlt">
+              <noscript><img src="assets/compact/wolke7-schwedt-preview.webp" width="980" height="588" loading="lazy" alt="Startseite des Kosmetikstudios Wolke 7"></noscript>
             </button>
             <div class="experience-project-copy">
               <h3 id="wolke7-titel">Wolke 7</h3>
@@ -412,8 +429,8 @@
           </article>
           <article class="experience-project" aria-labelledby="hoeck-titel">
             <button class="image-preview experience-preview" type="button" aria-haspopup="dialog" aria-label="Vorschau der Hoeck-Stiftung vergrößern" data-i18n-label="hoeckPreviewOpen">
-              <img src="assets/hoeck-stiftung-preview.webp" width="1280" height="768" loading="lazy" decoding="async" alt="Startseite der Hoeck-Stiftung" data-i18n-alt="hoeckPreviewAlt">
-              <span class="experience-enlarge" aria-hidden="true">+</span>
+              <img data-image="hoeck-stiftung-preview.webp" width="1280" height="768" decoding="async" alt="Startseite der Hoeck-Stiftung" data-i18n-alt="hoeckPreviewAlt">
+              <noscript><img src="assets/compact/hoeck-stiftung-preview.webp" width="980" height="588" loading="lazy" alt="Startseite der Hoeck-Stiftung"></noscript>
             </button>
             <div class="experience-project-copy">
               <h3 id="hoeck-titel">Hoeck-Stiftung</h3>
@@ -443,31 +460,31 @@
       <div class="social-links" role="group" aria-label="Social Media" data-i18n-label="socials">
         <span class="social-item" title="Adresse folgt" data-i18n-title="addressPending">
           <button class="social-icon" type="button" disabled aria-label="E-Mail (Adresse folgt)" data-i18n-label="emailPending">
-            <img src="assets/gmail.png" width="64" height="64" alt="">
+            <img src="assets/icons/gmail.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </button>
         </span>
         <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
           <button class="social-icon" type="button" disabled aria-label="WhatsApp (Link folgt)" data-i18n-label="whatsappPending">
-            <img src="assets/whatsapp.png" width="64" height="64" alt="">
+            <img src="assets/icons/whatsapp.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </button>
         </span>
         <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
           <button class="social-icon" type="button" disabled aria-label="Discord (Link folgt)" data-i18n-label="discordPending">
-            <img src="assets/discord.png" width="64" height="64" alt="">
+            <img src="assets/icons/discord.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </button>
         </span>
         <span class="social-item" title="Link folgt" data-i18n-title="linkPending">
           <button class="social-icon" type="button" disabled aria-label="Reddit (Link folgt)" data-i18n-label="redditPending">
-            <img src="assets/reddit.png" width="64" height="64" alt="">
+            <img src="assets/icons/reddit.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </button>
         </span>
         <span class="social-item">
           <a class="social-icon" href="https://github.com/povargg" target="_blank" rel="noopener noreferrer" aria-label="GitHub-Profil" data-i18n-label="githubProfile">
-            <img src="assets/github.png" width="64" height="64" alt="">
+            <img src="assets/icons/github.webp" width="110" height="110" alt="" loading="lazy" decoding="async">
             <span class="skill-reflection social-reflection" aria-hidden="true"></span>
           </a>
         </span>
@@ -524,10 +541,10 @@
             </section>
           </div>
         </div>
+        <button class="header-control skill-close" type="button" aria-label="Details schließen" data-i18n-label="closeSkill" autofocus>
+          <span class="material-symbol" aria-hidden="true">close</span>
+        </button>
       </div>
-      <button class="header-control skill-close" type="button" aria-label="Details schließen" data-i18n-label="closeSkill" autofocus>
-        <span class="material-symbol" aria-hidden="true">close</span>
-      </button>
     </div>
     <div class="skill-flight-source" aria-hidden="true" inert></div>
     </div>

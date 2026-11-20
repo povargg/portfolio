@@ -22,7 +22,7 @@ const portfolioPreferences = (() => {
       language: languages.includes(values?.language) ? values.language : browserLanguage,
       glass: values?.glass !== false,
       sectionIndicator: values?.sectionIndicator === true,
-      stickyNavigation: values?.stickyNavigation !== false,
+      stickyNavigation: values?.stickyNavigation === true,
       transparency: percent(values?.transparency, 200),
       refraction: percent(values?.refraction, 200),
       distortion: percent(values?.distortion, 200),
@@ -72,6 +72,7 @@ const portfolioPreferences = (() => {
     document.dispatchEvent(new Event("portfolio:preferences"));
   }
 
+  root.toggleAttribute("data-locale-loading", values.language !== "de");
   apply();
   systemDark.addEventListener("change", () => {
     if (values.mode === "system") notify();

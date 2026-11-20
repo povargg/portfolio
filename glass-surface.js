@@ -1,6 +1,6 @@
 import {
   Color, Mesh, OrthographicCamera, PlaneGeometry, RepeatWrapping, Scene, ShaderMaterial,
-  SRGBColorSpace, TextureLoader, Vector2, Vector3, Vector4, WebGLRenderer,
+  SRGBColorSpace, Texture, Vector2, Vector3, Vector4, WebGLRenderer,
 } from "./vendor/three.module.min.js";
 import { glassPaintWindow } from "./glass-motion.js";
 import { edgeThickness, prismBands } from "./glass-spectrum.js";
@@ -17,23 +17,12 @@ const lensFinishes = {
   menu: { boost: 1.44, highlight: .68, bodyAlpha: .74, rimAlpha: .96 },
 };
 
-const wallpaperLoader = new TextureLoader();
-const wallpapers = new Map();
-
-function loadWallpaper(mode) {
-  if (!wallpapers.has(mode)) {
-    const file = mode === "light" ? "./assets/glass-meadow.jpg" : "./assets/glass-sky.jpg";
-    const texture = wallpaperLoader.loadAsync(new URL(file, import.meta.url).href).then((image) => {
-      image.wrapS = image.wrapT = RepeatWrapping;
-      image.colorSpace = SRGBColorSpace;
-      return image;
-    }).catch((error) => {
-      wallpapers.delete(mode);
-      throw error;
-    });
-    wallpapers.set(mode, texture);
-  }
-  return wallpapers.get(mode);
+export function createWallpaperTexture(image) {
+  const texture = new Texture(image);
+  texture.wrapS = texture.wrapT = RepeatWrapping;
+  texture.colorSpace = SRGBColorSpace;
+  texture.needsUpdate = true;
+  return texture;
 }
 
 const fragmentShader = `
@@ -196,8 +185,6 @@ export function createGlassSurface(invalidate, chromeHost = null) {
   quad.frustumCulled = false;
   scene.add(quad);
 
-  let activeMode;
-  let activeTexture;
   let contextLost = false;
   let shaderFailed = false;
   let dimensions = "";
@@ -218,26 +205,12 @@ export function createGlassSurface(invalidate, chromeHost = null) {
     invalidate();
   });
 
-  function useWallpaper(mode) {
-    if (mode === activeMode) return;
-    activeMode = mode;
-    activeTexture = null;
-    loadWallpaper(mode).then((image) => {
-      if (activeMode === mode) {
-        activeTexture = image;
-        invalidate();
-      }
-    }).catch(() => {
-      invalidate();
-    });
-  }
-
   function draw(frame, panels, stage) {
     const {
-      width, height, scrollY, tileSize, scrollOffset, light, tint, transparency,
+      width, height, scrollY, tileSize, scrollOffset, light, tint, transparency, texture,
       refraction, distortion, dispersion, edge, pointerX, pointerY, speed, time,
     } = frame;
-    if (!activeTexture || contextLost || shaderFailed || !width || !height) return false;
+    if (!texture || contextLost || shaderFailed || !width || !height) return false;
 
     const host = chromeHost || stage || document.body;
     if (layer.parentElement !== host) host.prepend(layer);
@@ -308,9 +281,9 @@ export function createGlassSurface(invalidate, chromeHost = null) {
     renderer.setScissorTest(false);
     renderer.setViewport(0, 0, drawWidth, drawHeight);
     renderer.clear();
-    uniforms.wallpaper.value = activeTexture;
+    uniforms.wallpaper.value = texture;
     const screenOffset = relativeScroll - origin;
-    uniforms.tile.value.set((width - tileSize) / 2, scrollOffset + screenOffset, tileSize, activeTexture.image.width);
+    uniforms.tile.value.set((width - tileSize) / 2, scrollOffset + screenOffset, tileSize, texture.image.naturalWidth);
     uniforms.scroll.value.set(screenOffset, scrollOffset, height);
     uniforms.lightMode.value = Number(light);
     uniforms.tint.value.set(tint);
@@ -336,5 +309,5 @@ export function createGlassSurface(invalidate, chromeHost = null) {
     return true;
   }
 
-  return { useWallpaper, draw };
+  return { draw };
 }

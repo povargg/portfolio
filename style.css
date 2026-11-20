@@ -544,6 +544,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   transition: opacity 300ms ease;
 }
 
+.portrait-reveal img:not([src]),
+.image-preview img:not([src]) {
+  visibility: hidden;
+}
+
+[data-locale-loading] [data-i18n] {
+  visibility: hidden;
+}
+
 .portrait-model {
   position: absolute;
   inset: 0;
@@ -729,7 +738,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   overflow-wrap: anywhere;
 }
 
-.feature h3 + p, .windows-copy p + p {
+.feature h3 + p, .windows-copy p + p, .web-project p + p {
   margin-top: 0.85rem;
 }
 
@@ -760,6 +769,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .app-icon {
   width: 2.25rem;
   image-rendering: pixelated;
+}
+
+.app-icon--smooth {
+  image-rendering: auto;
 }
 
 .action-row {
@@ -927,6 +940,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   transition: transform 220ms;
 }
 
+.image-preview:has(> noscript img) > img[data-image] {
+  display: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .image-preview:hover img {
     transform: scale(1.025);
@@ -1056,11 +1073,18 @@ figcaption {
 
 .background-panel--education {
   background: var(--surface-raised);
+  container-type: inline-size;
 }
 
 .background-panel h2 {
   margin-bottom: 1rem;
   font-size: clamp(1.9rem, 3.45vw, 2.75rem);
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+:lang(ru) .background-panel--education h2 {
+  font-size: min(clamp(1.9rem, 3.45vw, 2.75rem), clamp(1.15rem, 13cqi, 2.75rem));
 }
 
 .background-panel h3 {
@@ -1097,22 +1121,6 @@ figcaption {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.experience-enlarge {
-  position: absolute;
-  right: 0.55rem;
-  bottom: 0.55rem;
-  display: grid;
-  place-items: center;
-  width: 2.05rem;
-  height: 2.05rem;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 1.3rem;
-  line-height: 1;
 }
 
 .experience-project-copy {

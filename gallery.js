@@ -9,8 +9,8 @@ const portfolioGallery = {
       const options = [...gallery.querySelectorAll("[data-effect]")];
       const caption = gallery.querySelector(".effect-caption");
       const captionLabel = gallery.querySelector("[data-i18n=desktopPreview]");
-      const asset = (option) => "assets/desktop-" + option.dataset.effect + ".webp";
-      let displayed = Math.max(0, options.findIndex((option) => asset(option) === image.getAttribute("src")));
+      const asset = (option) => "desktop-" + option.dataset.effect + ".webp";
+      let displayed = Math.max(0, options.findIndex((option) => asset(option) === image.dataset.image));
       let requested = displayed;
       let request = 0;
 
@@ -62,11 +62,13 @@ const portfolioGallery = {
         }
         preview.disabled = true;
         preview.setAttribute("aria-busy", "true");
-        const next = new Image();
-        next.src = asset(options[index]);
+        const file = asset(options[index]);
         try {
-          await next.decode();
-          if (version === request) show(next, index);
+          const next = await portfolioMedia.preview(file);
+          if (version === request) {
+            next.dataset.image = file;
+            show(next, index);
+          }
         } catch {
           if (version === request) updateControls(displayed);
         } finally {
@@ -102,6 +104,7 @@ const portfolioGallery = {
     let source;
     let animation;
     let closing = false;
+    let opening = 0;
 
     function thumbnail() {
       return source?.querySelector('img:not([aria-hidden="true"])');
@@ -139,12 +142,16 @@ const portfolioGallery = {
     async function open(preview) {
       if (source) return;
       source = preview;
+      const version = ++opening;
       const shot = thumbnail();
+      const original = portfolioMedia.image(shot.dataset.image, "full").catch(() => null);
       image.width = shot.naturalWidth || shot.width;
       image.height = shot.naturalHeight || shot.height;
-      image.src = shot.currentSrc || shot.src;
       updateCaption();
       try {
+        const compact = shot.currentSrc || shot.src
+          || (await portfolioMedia.preview(shot.dataset.image).catch(() => null))?.src;
+        image.src = compact || (await original).element.src;
         await image.decode();
       } catch {
         source = undefined;
@@ -156,6 +163,9 @@ const portfolioGallery = {
       zoom();
       requestAnimationFrame(() => {
         if (dialog.open && !closing) dialog.classList.add("is-shaded");
+      });
+      original.then((result) => {
+        if (result && version === opening && dialog.open && !closing) image.src = result.element.src;
       });
     }
 

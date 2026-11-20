@@ -1,3 +1,5 @@
+const portfolioTranslations = Object.create(null);
+
 (() => {
   const root = document.documentElement;
   const header = document.querySelector(".site-header");
@@ -27,22 +29,45 @@
   let liquidGlass;
   let liquidGlassModule;
   let portraitModule;
+  let started = false;
   const translateGalleries = [portfolioGallery.mount(document)];
+  const mainPortrait = document.querySelector(".hero .portrait-reveal");
+  const portraitObserver = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) loadPortrait();
+  }, { rootMargin: "100px" }) : null;
 
   function loadPortrait() {
-    if (portraitModule || location.protocol === "file:"
-        || root.classList.contains("intro-active") && document.querySelector(".welcome-intro.is-compact")) return;
-    portraitModule = import("./portrait-roll.js").then(({ mountPortraitRolls }) => mountPortraitRolls()).catch(() => {});
+    if (portraitModule || location.protocol === "file:") return;
+    portraitObserver?.disconnect();
+    portraitModule = portfolioMedia.afterPreviews()
+      .then(() => import("./portrait-roll.js"))
+      .then(({ mountPortraitRolls }) => mountPortraitRolls())
+      .catch(() => {});
   }
-  document.addEventListener("portfolio:intro", loadPortrait);
+
+  function watchMainMedia() {
+    portfolioMedia.watchPreviews();
+    if (root.classList.contains("intro-active") || portraitModule) return;
+    if (portraitObserver) portraitObserver.observe(mainPortrait);
+  }
+  document.addEventListener("portfolio:portrait-visible", loadPortrait);
+  document.addEventListener("portfolio:portrait", loadPortrait);
+  document.addEventListener("portfolio:intro", watchMainMedia);
 
   function updateGlass() {
     const preferences = portfolioPreferences.read();
+    portfolioMedia.setWallpaper(preferences.glass ? preferences.colorMode : undefined);
     liquidGlass?.update(preferences, preferences.colorMode);
-    if (!preferences.glass || liquidGlassModule || location.protocol === "file:") return;
+    if (!started || !preferences.glass || liquidGlassModule || location.protocol === "file:") return;
+    if (root.classList.contains("intro-active") && !document.querySelector(".intro-scene-card:not([hidden])")) return;
 
-    liquidGlassModule = import("./liquid-glass.js")
-      .then(({ createLiquidGlass }) => {
+    liquidGlassModule = portfolioMedia.afterPreviews()
+      .then(async () => {
+        if (!portfolioPreferences.read().glass) {
+          liquidGlassModule = undefined;
+          return;
+        }
+        const { createLiquidGlass } = await import("./liquid-glass.js");
         liquidGlass = createLiquidGlass();
         updateGlass();
       })
@@ -50,6 +75,8 @@
         // The static wallpaper and CSS backdrop stay active if the module cannot load.
       });
   }
+  document.addEventListener("portfolio:intro", updateGlass);
+  document.addEventListener("portfolio:scene", () => { if (!liquidGlass) updateGlass(); });
 
   const translationAttributes = {
     "data-i18n": null,
@@ -88,6 +115,31 @@
   }
   bindTranslations(document);
 
+  function showLanguage(language) {
+    if (language === displayedLanguage) return;
+    applyLanguage(language, bindings);
+    displayedLanguage = language;
+    root.lang = language;
+    for (const translate of translateGalleries) translate();
+    document.dispatchEvent(new Event("portfolio:language"));
+    if (currentSkill) skillDialogTitle.textContent = currentSkill.querySelector("h3").textContent;
+  }
+
+  function updateLanguage(language) {
+    if (language === displayedLanguage) return;
+    if (language === "de" || portfolioTranslations[language]) {
+      showLanguage(language);
+      return;
+    }
+    return portfolioMedia.loadScript("translations/" + language + ".js").then(() => {
+      if (portfolioPreferences.read().language === language) showLanguage(language);
+    }).catch(() => {
+      if (portfolioPreferences.read().language === language) {
+        for (const select of languageSelects) select.value = displayedLanguage;
+      }
+    });
+  }
+
   function renderPreferences() {
     const preferences = portfolioPreferences.read();
     const { palette, mode, language, glass } = preferences;
@@ -109,13 +161,7 @@
     themeColor.content = getComputedStyle(root).getPropertyValue("--surface").trim();
     updateGlass();
 
-    if (language === displayedLanguage) return;
-    applyLanguage(language, bindings);
-    displayedLanguage = language;
-    root.lang = language;
-    for (const translate of translateGalleries) translate();
-    document.dispatchEvent(new Event("portfolio:language"));
-    if (currentSkill) skillDialogTitle.textContent = currentSkill.querySelector("h3").textContent;
+    return updateLanguage(language);
   }
 
   function setMenu(open) {
@@ -184,7 +230,6 @@
   document.addEventListener("portfolio:preferences", renderPreferences);
   setMenu(false);
   root.classList.add("js");
-  renderPreferences();
 
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -443,13 +488,26 @@
     for (const item of scope.querySelectorAll(".social-item")) watchTilt(item, true);
   }
   bindCards(document);
+  portfolioMedia.watchPortrait(document);
   document.addEventListener("portfolio:intro-content", ({ detail: intro }) => {
     const scenes = intro.querySelector(".intro-scenes");
     applyLanguage(displayedLanguage, bindTranslations(intro.querySelector(".intro-about")));
     applyLanguage(displayedLanguage, bindTranslations(scenes));
     translateGalleries.push(portfolioGallery.mount(scenes));
     bindCards(scenes);
+    portfolioMedia.watchPortrait(intro);
+    portfolioMedia.watchPreviews(intro);
   });
-  portfolioMotion.start();
-  loadPortrait();
+
+  function startSite() {
+    root.removeAttribute("data-locale-loading");
+    portfolioMotion.start();
+    started = true;
+    watchMainMedia();
+    updateGlass();
+  }
+
+  const firstLanguage = renderPreferences();
+  if (firstLanguage) firstLanguage.then(startSite);
+  else startSite();
 })();
