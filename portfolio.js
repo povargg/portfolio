@@ -499,15 +499,10 @@ const portfolioTranslations = Object.create(null);
     portfolioMedia.watchPreviews(intro);
   });
 
-  function startSite() {
-    root.removeAttribute("data-locale-loading");
-    portfolioMotion.start();
-    started = true;
-    watchMainMedia();
-    updateGlass();
-  }
-
   const firstLanguage = renderPreferences();
-  if (firstLanguage) firstLanguage.then(startSite);
-  else startSite();
+  firstLanguage?.then(() => root.removeAttribute("data-locale-loading"));
+  portfolioMotion.start();
+  started = true;
+  watchMainMedia();
+  updateGlass();
 })();

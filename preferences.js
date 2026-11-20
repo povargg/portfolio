@@ -72,7 +72,14 @@ const portfolioPreferences = (() => {
     document.dispatchEvent(new Event("portfolio:preferences"));
   }
 
-  root.toggleAttribute("data-locale-loading", values.language !== "de");
+  if (values.language !== "de") {
+    root.setAttribute("data-locale-loading", "");
+    const dictionary = document.createElement("link");
+    dictionary.rel = "preload";
+    dictionary.as = "script";
+    dictionary.href = "translations/" + values.language + ".js";
+    document.head.append(dictionary);
+  }
   apply();
   systemDark.addEventListener("change", () => {
     if (values.mode === "system") notify();
