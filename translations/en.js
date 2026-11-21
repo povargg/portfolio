@@ -112,8 +112,8 @@ portfolioTranslations.en = {
   discordPending: "Discord (link coming soon)",
   redditPending: "Reddit (link coming soon)",
   githubProfile: "GitHub profile",
-  povardockDescription: "A customisable dock and keyboard launcher for Windows 11. I use Alt + Space to find apps, files and open windows. I added colour palettes and adjustable Liquid Glass to the dock.",
-  povardockCredit: "I adapted",
+  povardockDescription: "My customisable dock and keyboard launcher for Windows 11. PovarDock brings together app, file and emoji search, virtual desktop shortcuts, colour palettes, and Liquid Glass.",
+  povardockCredit: "I used",
   povardockUpstream: "Sumir Seth’s Wisp",
-  povardockCreditEnd: "for my own Windows setup.",
+  povardockCreditEnd: "as the starting point. I build and release PovarDock independently.",
 };

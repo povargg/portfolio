@@ -112,8 +112,8 @@ portfolioTranslations.ru = {
   discordPending: "Discord (ссылка появится позже)",
   redditPending: "Reddit (ссылка появится позже)",
   githubProfile: "Профиль GitHub",
-  povardockDescription: "Настраиваемый док и лаунчер для Windows 11. По Alt + Пробел я могу найти приложения, файлы и открытые окна. В док я добавил цветовые палитры и настраиваемый Liquid Glass.",
-  povardockCredit: "Для своего рабочего окружения Windows я доработал",
+  povardockDescription: "Мой настраиваемый док и клавиатурный лаунчер для Windows 11. В нём есть поиск приложений, файлов и эмодзи, быстрое переключение рабочих столов, цветовые палитры и Liquid Glass.",
+  povardockCredit: "Для первой версии я взял",
   povardockUpstream: "Wisp Сумира Сета",
-  povardockCreditEnd: "и выпустил свою версию.",
+  povardockCreditEnd: "за основу. Теперь я развиваю и выпускаю PovarDock как самостоятельный проект.",
 };
