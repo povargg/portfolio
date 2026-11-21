@@ -1,8 +1,8 @@
 # Taras Shybaiev | Portfolio
 
-Mein persönliches Portfolio für die Bewerbung um ein duales Studium. Hier zeige ich meine Projekte, darunter Linux-Dotfiles und Ultimate Desktop Effects.
+Ich habe dieses Portfolio für meine Bewerbung um ein duales Studium gebaut. Hier zeige ich meine Linux-Dotfiles, PovarDock und Ultimate Desktop Effects.
 
-Die Seite nutzt HTML, CSS, JavaScript und Three.js. Starte für die lokale Vorschau `python -m http.server 8000` im Projektordner und öffne `http://localhost:8000`.
+Die Seite nutzt HTML, CSS, JavaScript und Three.js. Für eine lokale Vorschau `python -m http.server 8000` im Projektordner ausführen und `http://localhost:8000` im Browser öffnen.
 
 ## Screenshots
 
