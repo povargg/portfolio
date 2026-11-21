@@ -113,7 +113,6 @@ portfolioTranslations.ru = {
   redditPending: "Reddit (ссылка появится позже)",
   githubProfile: "Профиль GitHub",
   povardockDescription: "Мой настраиваемый док и клавиатурный лаунчер для Windows 11. В нём есть поиск приложений, файлов и эмодзи, быстрое переключение рабочих столов, цветовые палитры и Liquid Glass.",
-  povardockCredit: "Для первой версии я взял",
+  povardockCredit: "Основано на",
   povardockUpstream: "Wisp Сумира Сета",
-  povardockCreditEnd: "за основу. Теперь я развиваю и выпускаю PovarDock как самостоятельный проект.",
 };

@@ -113,7 +113,6 @@ portfolioTranslations.en = {
   redditPending: "Reddit (link coming soon)",
   githubProfile: "GitHub profile",
   povardockDescription: "My customisable dock and keyboard launcher for Windows 11. PovarDock brings together app, file and emoji search, virtual desktop shortcuts, colour palettes, and Liquid Glass.",
-  povardockCredit: "I used",
-  povardockUpstream: "Sumir Seth’s Wisp",
-  povardockCreditEnd: "as the starting point. I build and release PovarDock independently.",
+  povardockCredit: "Based on",
+  povardockUpstream: "Wisp by Sumir Seth",
 };
