@@ -1,5 +1,5 @@
 portfolioTranslations.en = {
-  metadata: "Taras Shybaiev's portfolio for a dual study programme in IT, featuring Linux dotfiles, UltimateDesktopEffects and web development.",
+  metadata: "Taras Shybaiev's portfolio for a dual study programme in IT, featuring Linux dotfiles, Ultimate Desktop Effects and web development.",
   documentTitle: "Taras Shybaiev | Portfolio",
   skip: "Skip to content",
   menu: "Menu",
@@ -57,7 +57,7 @@ portfolioTranslations.en = {
   effectRain: "Rain",
   effectLeaves: "Leaves",
   effectHalloween: "Halloween",
-  softwareDetails: "For UltimateDesktopEffects, I built several effects for the Windows desktop and brought them together in one app. I learned how the graphics, window management and system tray controls fit together.",
+  softwareDetails: "For Ultimate Desktop Effects, I built several effects for the Windows desktop and brought them together in one app. I learned how the graphics, window management and system tray controls fit together.",
   softwareDetailOne: "Rain, falling leaves and Halloween run as separate effects, each with its own settings.",
   softwareDetailTwo: "Win32 handles the overlay and controls. DirectX draws the effects.",
   linuxDetails: "On Linux, I configure my editor, terminal and desktop to work together. I keep those settings in dotfiles so I can reuse them on another machine.",
@@ -112,8 +112,8 @@ portfolioTranslations.en = {
   discordPending: "Discord (link coming soon)",
   redditPending: "Reddit (link coming soon)",
   githubProfile: "GitHub profile",
-  windockDescription: "A customisable dock and keyboard launcher for Windows 11. I use Alt + Space to find apps, files and open windows. I added colour palettes and adjustable Liquid Glass to the dock.",
-  windockCredit: "I adapted",
-  windockUpstream: "Sumir Seth’s Wisp",
-  windockCreditEnd: "for my own Windows setup.",
+  povardockDescription: "A customisable dock and keyboard launcher for Windows 11. I use Alt + Space to find apps, files and open windows. I added colour palettes and adjustable Liquid Glass to the dock.",
+  povardockCredit: "I adapted",
+  povardockUpstream: "Sumir Seth’s Wisp",
+  povardockCreditEnd: "for my own Windows setup.",
 };

@@ -53,7 +53,7 @@ const portfolioIntroStory = (() => {
     typewriter.append(complete, typed);
     bio.append(copy);
 
-    const scenes = ["ultimate-desktop-effects", "windock", "linux-dotfiles", "portfolio-webseite", "skills", "erfahrung", "bildung", "kontakt"]
+    const scenes = ["ultimate-desktop-effects", "povardock", "linux-dotfiles", "portfolio-webseite", "skills", "erfahrung", "bildung", "kontakt"]
       .map((id) => cloneScene(document.getElementById(id)));
     stage.querySelector(".intro-scenes").append(...scenes);
     const end = sceneStart + (scenes.length + .63) * sceneLength;

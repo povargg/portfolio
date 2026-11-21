@@ -720,6 +720,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   text-transform: uppercase;
 }
 
+.legacy-project-anchor {
+  position: absolute;
+  scroll-margin-top: var(--nav-offset, 6rem);
+}
+
 .project-list {
   display: grid;
   gap: 1.25rem;
